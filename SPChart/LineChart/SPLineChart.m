@@ -303,9 +303,6 @@ const CGFloat spLineChartYLabelMargin = 8.0;
         [linePointsArray addObject:[NSValue valueWithCGPoint:CGPointMake(x, y)]];
     }
     
-    [linePath closePath];
-    //[pointPath closePath];
-    
     [self.touchablePoints addObject:[linePointsArray copy]];
     
 

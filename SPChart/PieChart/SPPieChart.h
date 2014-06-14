@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPChartDelegate.h"
+
 
 /**
  `SPPieChart` is, as the name could suggest, a pie chart.
@@ -105,5 +107,11 @@
  */
 - (void)resetHightlightedItem;
 
+
+
+
+/// @name Delegate
+
+@property (nonatomic, weak) id<SPChartDelegate> delegate;
 
 @end

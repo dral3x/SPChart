@@ -58,6 +58,9 @@
 
 - (void)_setup
 {
+    self.clipsToBounds = YES;
+    self.userInteractionEnabled = YES;
+    
     self.datas = [NSArray new]; // empty for the moment
     
     _outerMargin = 40.0f;
@@ -375,6 +378,37 @@
     }
     
     self.hightlightedItem = -1;
+}
+
+#pragma mark -
+#pragma mark Touch events
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self touchPoint:touches withEvent:event];
+    [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchPoint:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // IT DOES NOT WORK!
+    /*
+    // Get the point user touched
+    UITouch * touch = [touches anyObject];
+    CGPoint touchPoint = [touch locationInView:self];
+    NSLog(@"%@", NSStringFromCGPoint(touchPoint));
+    
+    [self.piecesLayers enumerateObjectsUsingBlock:^(CAShapeLayer * layer, NSUInteger idx, BOOL *stop) {
+    
+        if (CGPathContainsPoint(layer.path, NULL, touchPoint, NO)) {
+            if ([self.delegate respondsToSelector:@selector(SPChartPiePieceSelected:)]) {
+                [self.delegate SPChartPiePieceSelected:idx];
+            }
+            *stop = YES;
+        }
+        
+    }];
+    */
 }
 
 @end
