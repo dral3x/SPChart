@@ -9,6 +9,8 @@
 #import "SPBarChart.h"
 #import "SPBarChartData.h"
 
+#import "SPChartUtil.h"
+
 const CGFloat spBarChartXLabelMargin = 15.0;
 const CGFloat spBarChartYLabelMargin = 8.0;
 
@@ -44,9 +46,9 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     self.backgroundColor = [UIColor clearColor];
     self.clipsToBounds = YES;
 
-    _chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
+    self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
     
-    _yLabelFormatter = ^NSString *(NSInteger dataValue) {
+    self.yLabelFormatter = ^NSString *(NSInteger dataValue) {
         return [NSString stringWithFormat:@"%d", dataValue];
     };
 
@@ -151,7 +153,6 @@ const CGFloat spBarChartYLabelMargin = 8.0;
             UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
             label.font = _labelFont;
             label.textColor = _labelTextColor;
-            [label setTextAlignment:NSTextAlignmentRight];
             [label setBackgroundColor:[UIColor clearColor]];
             label.text = labelText;
             [label sizeToFit];
@@ -172,8 +173,8 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 
 - (void)_strokeYLabels
 {
-    CGFloat yLabelSectionHeight = (self.frame.size.height - _chartMargin.top - _chartMargin.bottom) / self.yLabelCount;
-    CGFloat yLabelHeight = ceilf([self _sizeOfYLabelWithFont:self.labelFont].height);
+    CGFloat yLabelSectionHeight = (self.frame.size.height - self.chartMargin.top - self.chartMargin.bottom) / self.yLabelCount;
+    CGFloat yLabelHeight = ceilf([SPChartUtil heightOfLabelWithFont:self.labelFont]);
     
     for (int index = 0; index < self.yLabelCount; index++) {
         
@@ -196,20 +197,6 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         [self addSubview:label];
         
     }
-}
-
-- (CGSize)_sizeOfYLabelWithFont:(UIFont *)font
-{
-    NSString * testString = @"Sample";
-    if ([testString respondsToSelector:@selector(sizeWithAttributes:)]) {
-        return [testString sizeWithAttributes:@{ NSFontAttributeName : font }];
-    }
-    
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    // Fallback
-    return [testString sizeWithFont:font];
-#pragma clang diagnostic pop
 }
 
 - (void)_strokeSectionLines

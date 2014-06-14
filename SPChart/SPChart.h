@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "SPChartCommon.h"
+
 #import "SPChartDelegate.h"
 
 #import "SPLineChart.h"

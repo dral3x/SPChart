@@ -7,12 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPChartCommon.h"
 #import "SPChartDelegate.h"
 #import "SPBar.h"
-
-typedef NSString *(^SPYLabelFromatter)(NSInteger dataValue);
-
-
 
 
 /**
@@ -46,7 +43,7 @@ typedef NSString *(^SPYLabelFromatter)(NSInteger dataValue);
 /*
  yLabelFormatter will format labels text on the Y axis
  */
-@property (nonatomic, copy) SPYLabelFromatter yLabelFormatter;
+@property (nonatomic, copy) SPYLabelFormatter yLabelFormatter;
 
 /**
  Margin between the canvas area and the full view.
