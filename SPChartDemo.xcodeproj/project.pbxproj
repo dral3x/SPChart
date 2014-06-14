@@ -26,7 +26,6 @@
 		FAD9A6B5194B881200E17D60 /* SPBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A69C194B881200E17D60 /* SPBar.m */; };
 		FAD9A6B6194B881200E17D60 /* SPBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A69E194B881200E17D60 /* SPBarChart.m */; };
 		FAD9A6B7194B881200E17D60 /* SPBarChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A0194B881200E17D60 /* SPBarChartData.m */; };
-		FAD9A6B8194B881200E17D60 /* SPSourcesLegendView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A3194B881200E17D60 /* SPSourcesLegendView.m */; };
 		FAD9A6B9194B881200E17D60 /* SPLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A6194B881200E17D60 /* SPLineChart.m */; };
 		FAD9A6BA194B881200E17D60 /* SPLineChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A8194B881200E17D60 /* SPLineChartData.m */; };
 		FAD9A6BC194B881200E17D60 /* SPPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6AD194B881200E17D60 /* SPPieChart.m */; };
@@ -76,8 +75,6 @@
 		FAD9A69E194B881200E17D60 /* SPBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPBarChart.m; sourceTree = "<group>"; };
 		FAD9A69F194B881200E17D60 /* SPBarChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBarChartData.h; sourceTree = "<group>"; };
 		FAD9A6A0194B881200E17D60 /* SPBarChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPBarChartData.m; sourceTree = "<group>"; };
-		FAD9A6A2194B881200E17D60 /* SPSourcesLegendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPSourcesLegendView.h; sourceTree = "<group>"; };
-		FAD9A6A3194B881200E17D60 /* SPSourcesLegendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPSourcesLegendView.m; sourceTree = "<group>"; };
 		FAD9A6A5194B881200E17D60 /* SPLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPLineChart.h; sourceTree = "<group>"; };
 		FAD9A6A6194B881200E17D60 /* SPLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPLineChart.m; sourceTree = "<group>"; };
 		FAD9A6A7194B881200E17D60 /* SPLineChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPLineChartData.h; sourceTree = "<group>"; };
@@ -206,7 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				FAD9A69A194B881200E17D60 /* BarChart */,
-				FAD9A6A1194B881200E17D60 /* Legend */,
 				FAD9A6A4194B881200E17D60 /* LineChart */,
 				FAD9A6AB194B881200E17D60 /* PieChart */,
 				FAD9A6B0194B881200E17D60 /* Popup */,
@@ -229,15 +225,6 @@
 				FAD9A6A0194B881200E17D60 /* SPBarChartData.m */,
 			);
 			path = BarChart;
-			sourceTree = "<group>";
-		};
-		FAD9A6A1194B881200E17D60 /* Legend */ = {
-			isa = PBXGroup;
-			children = (
-				FAD9A6A2194B881200E17D60 /* SPSourcesLegendView.h */,
-				FAD9A6A3194B881200E17D60 /* SPSourcesLegendView.m */,
-			);
-			path = Legend;
 			sourceTree = "<group>";
 		};
 		FAD9A6A4194B881200E17D60 /* LineChart */ = {
@@ -370,7 +357,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAD9A651194B873C00E17D60 /* SPDetailViewController.m in Sources */,
-				FAD9A6B8194B881200E17D60 /* SPSourcesLegendView.m in Sources */,
 				FAD9A644194B873B00E17D60 /* main.m in Sources */,
 				FAD9A6BD194B881200E17D60 /* SPPieChartData.m in Sources */,
 				FAD9A6BE194B881200E17D60 /* SPChartPopup.m in Sources */,
