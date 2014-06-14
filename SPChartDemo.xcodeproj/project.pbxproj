@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FAA2B1D1194C8C2600215E76 /* SPChartUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = FAA2B1D0194C8C2600215E76 /* SPChartUtil.m */; };
 		FAD9A638194B873B00E17D60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A637194B873B00E17D60 /* Foundation.framework */; };
 		FAD9A63A194B873B00E17D60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A639194B873B00E17D60 /* CoreGraphics.framework */; };
 		FAD9A63C194B873B00E17D60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A63B194B873B00E17D60 /* UIKit.framework */; };
@@ -26,9 +27,8 @@
 		FAD9A6B6194B881200E17D60 /* SPBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A69E194B881200E17D60 /* SPBarChart.m */; };
 		FAD9A6B7194B881200E17D60 /* SPBarChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A0194B881200E17D60 /* SPBarChartData.m */; };
 		FAD9A6B8194B881200E17D60 /* SPSourcesLegendView.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A3194B881200E17D60 /* SPSourcesLegendView.m */; };
-		FAD9A6B9194B881200E17D60 /* PNLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A6194B881200E17D60 /* PNLineChart.m */; };
-		FAD9A6BA194B881200E17D60 /* PNLineChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A8194B881200E17D60 /* PNLineChartData.m */; };
-		FAD9A6BB194B881200E17D60 /* PNLineChartDataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6AA194B881200E17D60 /* PNLineChartDataItem.m */; };
+		FAD9A6B9194B881200E17D60 /* SPLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A6194B881200E17D60 /* SPLineChart.m */; };
+		FAD9A6BA194B881200E17D60 /* SPLineChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6A8194B881200E17D60 /* SPLineChartData.m */; };
 		FAD9A6BC194B881200E17D60 /* SPPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6AD194B881200E17D60 /* SPPieChart.m */; };
 		FAD9A6BD194B881200E17D60 /* SPPieChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6AF194B881200E17D60 /* SPPieChartData.m */; };
 		FAD9A6BE194B881200E17D60 /* SPChartPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A6B2194B881200E17D60 /* SPChartPopup.m */; };
@@ -46,6 +46,9 @@
 
 /* Begin PBXFileReference section */
 		D1CDA13C3EBB49648467EA69 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAA2B1CF194C8C2600215E76 /* SPChartUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SPChartUtil.h; path = Util/SPChartUtil.h; sourceTree = "<group>"; };
+		FAA2B1D0194C8C2600215E76 /* SPChartUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SPChartUtil.m; path = Util/SPChartUtil.m; sourceTree = "<group>"; };
+		FAA2B1D3194C921800215E76 /* SPChartCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPChartCommon.h; sourceTree = "<group>"; };
 		FAD9A634194B873B00E17D60 /* SPChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD9A637194B873B00E17D60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FAD9A639194B873B00E17D60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -75,12 +78,10 @@
 		FAD9A6A0194B881200E17D60 /* SPBarChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPBarChartData.m; sourceTree = "<group>"; };
 		FAD9A6A2194B881200E17D60 /* SPSourcesLegendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPSourcesLegendView.h; sourceTree = "<group>"; };
 		FAD9A6A3194B881200E17D60 /* SPSourcesLegendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPSourcesLegendView.m; sourceTree = "<group>"; };
-		FAD9A6A5194B881200E17D60 /* PNLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChart.h; sourceTree = "<group>"; };
-		FAD9A6A6194B881200E17D60 /* PNLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChart.m; sourceTree = "<group>"; };
-		FAD9A6A7194B881200E17D60 /* PNLineChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChartData.h; sourceTree = "<group>"; };
-		FAD9A6A8194B881200E17D60 /* PNLineChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChartData.m; sourceTree = "<group>"; };
-		FAD9A6A9194B881200E17D60 /* PNLineChartDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PNLineChartDataItem.h; sourceTree = "<group>"; };
-		FAD9A6AA194B881200E17D60 /* PNLineChartDataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PNLineChartDataItem.m; sourceTree = "<group>"; };
+		FAD9A6A5194B881200E17D60 /* SPLineChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPLineChart.h; sourceTree = "<group>"; };
+		FAD9A6A6194B881200E17D60 /* SPLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPLineChart.m; sourceTree = "<group>"; };
+		FAD9A6A7194B881200E17D60 /* SPLineChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPLineChartData.h; sourceTree = "<group>"; };
+		FAD9A6A8194B881200E17D60 /* SPLineChartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPLineChartData.m; sourceTree = "<group>"; };
 		FAD9A6AC194B881200E17D60 /* SPPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPieChart.h; sourceTree = "<group>"; };
 		FAD9A6AD194B881200E17D60 /* SPPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPPieChart.m; sourceTree = "<group>"; };
 		FAD9A6AE194B881200E17D60 /* SPPieChartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPPieChartData.h; sourceTree = "<group>"; };
@@ -115,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FAA2B1D2194C8C2B00215E76 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				FAA2B1CF194C8C2600215E76 /* SPChartUtil.h */,
+				FAA2B1D0194C8C2600215E76 /* SPChartUtil.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		FAD9A62B194B873B00E17D60 = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +212,8 @@
 				FAD9A6B0194B881200E17D60 /* Popup */,
 				FAD9A6B3194B881200E17D60 /* SPChart.h */,
 				FAD9A6B4194B881200E17D60 /* SPChartDelegate.h */,
+				FAA2B1D3194C921800215E76 /* SPChartCommon.h */,
+				FAA2B1D2194C8C2B00215E76 /* Util */,
 			);
 			path = SPChart;
 			sourceTree = "<group>";
@@ -231,12 +243,10 @@
 		FAD9A6A4194B881200E17D60 /* LineChart */ = {
 			isa = PBXGroup;
 			children = (
-				FAD9A6A5194B881200E17D60 /* PNLineChart.h */,
-				FAD9A6A6194B881200E17D60 /* PNLineChart.m */,
-				FAD9A6A7194B881200E17D60 /* PNLineChartData.h */,
-				FAD9A6A8194B881200E17D60 /* PNLineChartData.m */,
-				FAD9A6A9194B881200E17D60 /* PNLineChartDataItem.h */,
-				FAD9A6AA194B881200E17D60 /* PNLineChartDataItem.m */,
+				FAD9A6A5194B881200E17D60 /* SPLineChart.h */,
+				FAD9A6A6194B881200E17D60 /* SPLineChart.m */,
+				FAD9A6A7194B881200E17D60 /* SPLineChartData.h */,
+				FAD9A6A8194B881200E17D60 /* SPLineChartData.m */,
 			);
 			path = LineChart;
 			sourceTree = "<group>";
@@ -368,11 +378,11 @@
 				FAD9A64E194B873B00E17D60 /* SPMasterViewController.m in Sources */,
 				FAD9A6B5194B881200E17D60 /* SPBar.m in Sources */,
 				FAD9A6B7194B881200E17D60 /* SPBarChartData.m in Sources */,
+				FAA2B1D1194C8C2600215E76 /* SPChartUtil.m in Sources */,
 				FAD9A6B6194B881200E17D60 /* SPBarChart.m in Sources */,
-				FAD9A6BB194B881200E17D60 /* PNLineChartDataItem.m in Sources */,
 				FAD9A6BC194B881200E17D60 /* SPPieChart.m in Sources */,
-				FAD9A6BA194B881200E17D60 /* PNLineChartData.m in Sources */,
-				FAD9A6B9194B881200E17D60 /* PNLineChart.m in Sources */,
+				FAD9A6BA194B881200E17D60 /* SPLineChartData.m in Sources */,
+				FAD9A6B9194B881200E17D60 /* SPLineChart.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
