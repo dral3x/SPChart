@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SPChartDelegate.h"
+#import <SPChartDelegate.h>
 
 @interface SPDetailViewController : UIViewController <SPChartDelegate>
 
