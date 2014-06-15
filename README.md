@@ -3,7 +3,7 @@
 A simple yet beautifully animated chart library, used in [Spreaker](http://itunes.apple.com/app/id388449677) for iPhone app. 
 It is a fork of [PNChart](https://github.com/kevinzhow/PNChart) with a much cleaner and uniform code and more nice features built-in.
 
-
+In the repository, there is a demo app you can use to see and test specific customizations you would like you have. Have fun with it!
 
 If you **found a bug** or **have a feature request**, please open an issue. 
 If you **want to contribute**, submit a pull request.
@@ -20,7 +20,6 @@ If you **want to contribute**, submit a pull request.
 
 * If a chart is **empty**, an custom text message is automatically displayed over the chart.
 
-
 Plus, in the pie chart:
 
 * **highlight** a specific piece of the pie
@@ -28,10 +27,8 @@ Plus, in the pie chart:
 
 There is also some nice **accessories**:
 
-* `SPChartPopup`, a popup view that you can use to show any custom information once user select a specific point/bar in the chart. Again, in SPChartDemo you can see how to use it.
+* `SPChartPopup`, a popup view that you can use to show any custom information once user select a specific point/bar in the chart.
 
-
-In this repository, there is a demo app you can use to see and test specific customizations you would like you have. Have fun with it!
 
 
 ## Limitations
@@ -74,7 +71,7 @@ and remember to link the required frameworks in your project targets.
 
 ## Usage
 
-There are good running examples in the *demo project*, inside this repository.
+There is a nice *demo app* in the Example folder.
 
 Each chart has a well documented header file. Please refer to them to understand how to customize them.
 
