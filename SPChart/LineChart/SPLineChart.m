@@ -118,9 +118,6 @@ const CGFloat spLineChartYLabelMargin = 8.0;
 
 - (void)drawChart
 {
-    // Cleanup
-    // TODO
-    
     [self _recalculateCanvas];
     
     BOOL isChartEmpty = [self isEmpty] && self.emptyChartText != nil;

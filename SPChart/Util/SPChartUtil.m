@@ -24,4 +24,16 @@
 #pragma clang diagnostic pop
 }
 
++ (void)layersCleanupWithCollection:(NSMutableArray *)array
+{
+    [array makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    [array removeAllObjects];
+}
+
++ (void)viewsCleanupWithCollection:(NSMutableArray *)array
+{
+    [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [array removeAllObjects];
+}
+
 @end

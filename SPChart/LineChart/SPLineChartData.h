@@ -25,8 +25,8 @@ typedef NS_ENUM(NSInteger, SPLineChartPointStyle)
 @property (nonatomic, assign) SPLineChartPointStyle pointStyle;
 
 /**
- *  if pointStyle is cycle, pointWidth equals cycle's diameter
- *  if pointStyle is square, that means the foundation is square with pointWidth long
+ If pointStyle is cycle, pointWidth equals cycle's diameter.
+ If pointStyle is square, that means the foundation is square with pointWidth long.
  */
 @property (nonatomic, assign) CGFloat pointWidth;
 

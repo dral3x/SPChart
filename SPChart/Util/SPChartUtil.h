@@ -12,4 +12,7 @@
 
 + (CGFloat)heightOfLabelWithFont:(UIFont *)font;
 
++ (void)layersCleanupWithCollection:(NSMutableArray *)array;
++ (void)viewsCleanupWithCollection:(NSMutableArray *)array;
+
 @end

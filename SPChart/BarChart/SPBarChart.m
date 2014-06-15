@@ -106,8 +106,8 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 - (void)drawChart
 {
     // Cleanup
-    [self viewCleanupForCollection:_labels];
-    [self viewCleanupForCollection:_bars];
+    [SPChartUtil viewsCleanupWithCollection:_labels];
+    [SPChartUtil viewsCleanupWithCollection:_bars];
     
     // Recalculate some data
     _barXSpace = (self.frame.size.width - _chartMargin.left - _chartMargin.right) / [self.datas count];
@@ -346,14 +346,6 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 - (CGFloat)_scaleFactorOfBarWithData:(SPBarChartData *)data maxValue:(NSInteger)maxValue
 {
     return (float)data.cumulatedValue / (float)maxValue;
-}
-
-- (void)viewCleanupForCollection:(NSMutableArray *)array
-{
-    if (array.count) {
-        [array makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [array removeAllObjects];
-    }
 }
 
 #pragma mark -
