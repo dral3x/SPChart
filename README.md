@@ -69,7 +69,7 @@ All you have to do is
 
 ### Copy the SPChart folder to your project
 
-
+and remember to link the required frameworks in your project targets.
 
 
 ## Usage
