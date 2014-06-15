@@ -8,7 +8,7 @@
 
 #import "SPDetailViewController.h"
 
-#import <SPChart.h>
+#import "SPChart.h"
 
 #define Color1  [UIColor colorWithRed:247.0 / 255.0 green:221.0 / 255.0 blue:0.0 / 255.0 alpha:1.0f]
 #define Color2  [UIColor colorWithRed:207.0 / 255.0 green:171.0 / 255.0 blue:0.0 / 255.0 alpha:1.0f]

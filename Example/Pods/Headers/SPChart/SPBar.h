@@ -1,1 +1,0 @@
-../../SPChart/SPChart/BarChart/SPBar.h
