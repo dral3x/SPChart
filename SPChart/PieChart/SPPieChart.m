@@ -329,10 +329,6 @@
 
 - (void)setHightlightedItem:(NSInteger)itemIndex
 {
-    // Check for invalid index
-    if (itemIndex < 0 || itemIndex >= [self.datas count]) {
-        return;
-    }
     // Check for avoiding useless animation
     if (_hightlightedItem == itemIndex || [self isEmpty]) {
         return;
@@ -355,8 +351,8 @@
     // Apply the appropriate animation on every piece
     for (NSUInteger index=0; index<self.datas.count; index++) {
         
-        CABasicAnimation * animation = (index == itemIndex) ? fadeInAnimation : fadeOutAnimation;
-        float finalOpacity = (index == itemIndex) ? fadeInOpacity : fadeOutOpacity;
+        CABasicAnimation * animation = (itemIndex < 0) ? fadeInAnimation : (index == itemIndex) ? fadeInAnimation : fadeOutAnimation;
+        float finalOpacity = (itemIndex < 0) ? fadeInOpacity : (index == itemIndex) ? fadeInOpacity : fadeOutOpacity;
         
         CALayer * pieceLayer = self.piecesLayers[index];
         [pieceLayer addAnimation:animation forKey:@"opacityAnimation"];
@@ -373,7 +369,7 @@
 - (void)resetHightlightedItem
 {
     // Check for avoid useless animation
-    if (self.hightlightedItem < 0 || [self isEmpty]) {
+    if ([self isEmpty]) {
         return;
     }
     
