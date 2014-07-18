@@ -73,7 +73,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     // Default customize properties
     
     self.yLabelFormatter = ^NSString *(NSInteger dataValue) {
-        return [NSString stringWithFormat:@"%d", dataValue];
+        return [NSString stringWithFormat:@"%ld", (long)dataValue];
     };
 
     self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);

@@ -49,7 +49,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
     
     self.yLabelFormatter = ^NSString *(NSInteger dataValue) {
-        return [NSString stringWithFormat:@"%d", dataValue];
+        return [NSString stringWithFormat:@"%ld", (long)dataValue];
     };
 
     _datas = [NSArray new];
