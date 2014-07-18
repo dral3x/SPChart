@@ -1,3 +1,8 @@
+2014-07-18 version 0.1.2
+
+  * Added some flags for customize behavior of the pie chart
+  * Fixed a warning on formatting numbers
+
 2014-06-16 version 0.1.1
 
   * Fixed bug that prevent reset of highlighted piece in SPPieChart
