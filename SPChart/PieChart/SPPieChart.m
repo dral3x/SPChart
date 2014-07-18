@@ -70,8 +70,12 @@
     self.descriptionTextColor = [UIColor darkGrayColor];
     self.descriptionTextFont = [UIFont systemFontOfSize:12.0];
     self.preferDataDescription = NO;
+    self.hideDescriptionTexts = NO;
     
     self.drawingDuration = 1.0;
+    
+    self.initialAngle = 0.0;
+    self.randomInitialAngle = YES;
     
     _hightlightedItem = -1;
     
@@ -89,7 +93,7 @@
     /*
      The chart starts drawing from a random angle. Just for improve the looks of it
      */
-    self.initialRotation = ((double)arc4random() / ARC4RANDOM_MAX) * M_PI * 2;
+    self.initialRotation = (self.randomInitialAngle) ? ((double)arc4random() / ARC4RANDOM_MAX) * M_PI * 2 : self.initialAngle;
 	
 	[_contentView removeFromSuperview];
 	_contentView = [[UIView alloc] initWithFrame:self.bounds];
@@ -169,6 +173,10 @@
 
 - (void)_drawLabels
 {
+    if (self.hideDescriptionTexts) {
+        return;
+    }
+    
     SPPieChartData * currentItem;
 	CGFloat currentValue = 0;
     

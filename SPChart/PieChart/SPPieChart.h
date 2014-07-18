@@ -79,6 +79,23 @@
  */
 @property (nonatomic, assign) BOOL preferDataDescription;
 
+/**
+ Prevent the drawing of text around the chart.
+ Default NO
+ */
+@property (nonatomic, assign) BOOL hideDescriptionTexts;
+
+/**
+ Set the drawing start angle, in radiant. If `randomInitialAngle` is YES, this property is ignored.
+ Default M_PI_2
+ */
+@property (nonatomic, assign) CGFloat initialAngle;
+
+/**
+ Turns on or off the random starting angle feature.
+ Default YES
+ */
+@property (nonatomic, assign) BOOL randomInitialAngle;
 
 
 /// @name Empty chart
