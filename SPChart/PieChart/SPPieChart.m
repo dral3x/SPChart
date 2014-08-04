@@ -238,7 +238,7 @@
 	
     NSString * titleText = [NSString stringWithFormat:@"%.0f%%", currentDataItem.value / _total * 100];
     if (self.preferDataDescription && currentDataItem.description) {
-        titleText = currentDataItem.description;
+        titleText = currentDataItem.dataDescription;
     }
     
     CGPoint center = CGPointMake(

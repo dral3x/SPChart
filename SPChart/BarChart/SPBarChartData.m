@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong, readwrite) NSArray * values;
 @property (nonatomic, strong, readwrite) NSArray * colors;
-@property (nonatomic, strong, readwrite) NSString * description;
+@property (nonatomic, strong, readwrite) NSString * dataDescription;
 
 @end
 
@@ -35,7 +35,7 @@
     
     data.values = values;
     data.colors = colors;
-    data.description = description;
+    data.dataDescription = description;
     
     return data;
 }

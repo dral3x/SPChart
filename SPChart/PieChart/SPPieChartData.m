@@ -12,7 +12,7 @@
 
 @property (nonatomic, readwrite) NSInteger value;
 @property (nonatomic, readwrite) UIColor * color;
-@property (nonatomic, readwrite) NSString * description;
+@property (nonatomic, readwrite) NSString * dataDescription;
 
 @end
 
@@ -31,7 +31,8 @@
 	SPPieChartData * data = [SPPieChartData new];
     data.value = value;
     data.color = color;
-	data.description = description;
+	data.dataDescription = description;
+    
 	return data;
 }
 

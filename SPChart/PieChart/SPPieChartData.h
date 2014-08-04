@@ -19,6 +19,6 @@
 
 @property (nonatomic, assign, readonly) NSInteger value;
 @property (nonatomic, copy, readonly) UIColor * color;
-@property (nonatomic, copy, readonly) NSString * description;
+@property (nonatomic, copy, readonly) NSString * dataDescription;
 
 @end

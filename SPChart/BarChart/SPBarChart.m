@@ -148,7 +148,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         
         if (labelAddCount == _xLabelSkip) {
             SPBarChartData * data = self.datas[index];
-            NSString * labelText = data.description;
+            NSString * labelText = data.dataDescription;
             
             UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
             label.font = _labelFont;

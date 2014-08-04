@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53304C5800354643ADF54EC2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CDA13C3EBB49648467EA69 /* libPods.a */; };
 		FA0F2C48194DD598006E8BB2 /* SPBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0F2C2F194DD598006E8BB2 /* SPBar.m */; };
 		FA0F2C49194DD598006E8BB2 /* SPBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0F2C31194DD598006E8BB2 /* SPBarChart.m */; };
 		FA0F2C4A194DD598006E8BB2 /* SPBarChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0F2C33194DD598006E8BB2 /* SPBarChartData.m */; };
@@ -98,7 +97,6 @@
 				FAD9A63A194B873B00E17D60 /* CoreGraphics.framework in Frameworks */,
 				FAD9A63C194B873B00E17D60 /* UIKit.framework in Frameworks */,
 				FAD9A638194B873B00E17D60 /* Foundation.framework in Frameworks */,
-				53304C5800354643ADF54EC2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

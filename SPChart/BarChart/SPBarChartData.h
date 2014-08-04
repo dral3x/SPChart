@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong, readonly) NSArray * values;
 @property (nonatomic, strong, readonly) NSArray * colors;
-@property (nonatomic, strong, readonly) NSString * description;
+@property (nonatomic, strong, readonly) NSString * dataDescription;
 
 - (NSInteger)cumulatedValue;
 
