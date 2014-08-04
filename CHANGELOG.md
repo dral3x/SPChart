@@ -1,3 +1,7 @@
+2014-08-04 version 0.1.3
+
+  * Fixed some minor warnings
+
 2014-07-18 version 0.1.2
 
   * Added some flags for customize behavior of the pie chart
