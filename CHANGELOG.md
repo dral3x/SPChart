@@ -1,3 +1,7 @@
+2015-01-08 version 0.1.4
+
+  * FIX: popup partially visible 'cause of out of super view bounds.
+  
 2014-08-04 version 0.1.3
 
   * Fixed some minor warnings

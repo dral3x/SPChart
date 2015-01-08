@@ -111,8 +111,13 @@ const NSTimeInterval visibilityAnimationDuration = 0.25f;
     CGRect popupRect = self.bounds;
     CGRect containerRect = self.superview.bounds;
     
-    p.y -= CGRectGetMidY(popupRect) + gap;
+    // Keep popup inside container
+    // Bound Y
+    if (p.y - CGRectGetHeight(popupRect) - gap >= 0) {
+        p.y -= CGRectGetMidY(popupRect) + gap;
+    }
     
+    // Bound X
     if (p.x - CGRectGetMidX(popupRect) < 0) {
         p.x = CGRectGetMidX(popupRect);
     } else if (p.x + CGRectGetMidX(popupRect) > CGRectGetMaxX(containerRect)) {
