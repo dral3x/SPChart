@@ -113,7 +113,9 @@ const NSTimeInterval visibilityAnimationDuration = 0.25f;
     
     // Keep popup inside container
     // Bound Y
-    if (p.y - CGRectGetHeight(popupRect) - gap >= 0) {
+    if (p.y - CGRectGetHeight(popupRect) - gap < 0) {
+        p.y = CGRectGetMidY(popupRect);
+    } else {
         p.y -= CGRectGetMidY(popupRect) + gap;
     }
     
