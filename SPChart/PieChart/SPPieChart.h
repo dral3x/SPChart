@@ -13,12 +13,12 @@
 /**
  `SPPieChart` is, as the name could suggest, a pie chart.
  
- You can eather instanciate a new `SPPieChart` using `initWithFrame:` or 
-   prepare it in xib/storyboard files.
+ You can eather instanciate a new `SPPieChart` using `initWithFrame:` or
+ prepare it in xib/storyboard files.
  
  Typically, you should create an array of `SPPieChartData` and set it in `items`.
  Than you can adjust any properties you like and, at the end, call `drawChart`
-   to see the chart appears with a nice animation.
+ to see the chart appears with a nice animation.
  
  ## Empty chart
  If the chart is empty, `emptyChartText` will be display in the middle of it.
@@ -40,24 +40,30 @@
 
 /// @name Customization
 
-/** 
- Duration of the drawing animation. Default value is 1.0 second
+/*
+ When YES, the drawing of the chart will be animated. When NO, no animation will occure.
+ Default YES
  */
-@property (nonatomic, assign) NSTimeInterval drawingDuration; 
+@property (assign, nonatomic) BOOL animate;
 
 /**
- Minimum empty space between the pie and the edges of the view. 
+ Duration of the drawing animation. Default value is 1.0 second
+ */
+@property (nonatomic, assign) NSTimeInterval drawingDuration;
+
+/**
+ Minimum empty space between the pie and the edges of the view.
  Default is 40.0f
  */
 @property (nonatomic, assign) CGFloat outerMargin;
 
-/** 
- Radius of the hole in the center of the chart. 
+/**
+ Radius of the hole in the center of the chart.
  Default is 0.0f
  */
 @property (nonatomic, assign) CGFloat innerMargin;
 
-/** 
+/**
  Font used for all labels in the chart
  */
 @property (nonatomic, copy) UIFont * descriptionTextFont;
@@ -110,6 +116,12 @@
  Default is `nil`.
  */
 @property (nonatomic, copy) NSString * emptyChartText;
+
+/*
+ emptyLabelFont will apply on the label that display `emptyChartText` message.
+ Default nil, means the same as `descriptionTextFont`
+ */
+@property (nonatomic, strong) UIFont * emptyLabelFont;
 
 
 /// @name Highlighting a piece of the pie

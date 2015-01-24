@@ -40,11 +40,11 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-	self = [super initWithFrame:frame];
-	if (self) {
+    self = [super initWithFrame:frame];
+    if (self) {
         [self _setup];
-	}
-	return self;
+    }
+    return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -72,6 +72,7 @@
     self.preferDataDescription = NO;
     self.hideDescriptionTexts = NO;
     
+    self.animate = YES;
     self.drawingDuration = 1.0;
     
     self.initialAngle = 0.0;
@@ -87,25 +88,25 @@
 {
 #define ARC4RANDOM_MAX      0x100000000
     
-	_currentTotal = 0;
-	_total = 0;
+    _currentTotal = 0;
+    _total = 0;
     
     /*
      The chart starts drawing from a random angle. Just for improve the looks of it
      */
     self.initialRotation = (self.randomInitialAngle) ? ((double)arc4random() / ARC4RANDOM_MAX) * M_PI * 2 : self.initialAngle;
-	
-	[_contentView removeFromSuperview];
-	_contentView = [[UIView alloc] initWithFrame:self.bounds];
-	[self addSubview:_contentView];
+    
+    [_contentView removeFromSuperview];
+    _contentView = [[UIView alloc] initWithFrame:self.bounds];
+    [self addSubview:_contentView];
     [_descriptionLabels removeAllObjects];
-	_descriptionLabels = [NSMutableArray new];
-	
+    _descriptionLabels = [NSMutableArray new];
+    
     [_piecesLayers removeAllObjects];
     _piecesLayers = [NSMutableArray new];
     
-	_pieLayer = [CAShapeLayer layer];
-	[_contentView.layer addSublayer:_pieLayer];
+    _pieLayer = [CAShapeLayer layer];
+    [_contentView.layer addSublayer:_pieLayer];
 }
 
 - (void)setInnerMargin:(CGFloat)innerMargin
@@ -134,41 +135,42 @@
 
 - (void)drawChart
 {
-	[self _recalculateDefaults];
-	
+    [self _recalculateDefaults];
+    
     if (![self isEmpty]) {
         [self _drawSlices];
         [self _drawLabels];
-
-    } else {
+        
+    }
+    else {
         [self _drawEmptyLabel];
     }
 }
 
 - (void)_drawSlices
 {
-	SPPieChartData * currentItem;
-	CGFloat currentValue = 0;
-	for (NSUInteger i = 0; i < self.datas.count; i++) {
-		currentItem = [self dataItemForIndex:i];
-		
-		
-		CGFloat start = currentValue / _total;
-		CGFloat end = (currentValue + currentItem.value) / _total;
-		
-		CAShapeLayer * currentPieLayer = [self _createCircleLayerWithRadius:_innerCircleRadius + (_outterCircleRadius - _innerCircleRadius)/2
+    SPPieChartData * currentItem;
+    CGFloat currentValue = 0;
+    for (NSUInteger i = 0; i < self.datas.count; i++) {
+        currentItem = [self dataItemForIndex:i];
+        
+        
+        CGFloat start = currentValue / _total;
+        CGFloat end = (currentValue + currentItem.value) / _total;
+        
+        CAShapeLayer * currentPieLayer = [self _createCircleLayerWithRadius:_innerCircleRadius + (_outterCircleRadius - _innerCircleRadius)/2
                                                                 borderWidth:_outterCircleRadius - _innerCircleRadius
                                                                   fillColor:[UIColor clearColor]
                                                                 borderColor:currentItem.color
                                                             startPercentage:start
                                                               endPercentage:end];
-		[_pieLayer addSublayer:currentPieLayer];
+        [_pieLayer addSublayer:currentPieLayer];
         [self.piecesLayers addObject:currentPieLayer];
-		
-		currentValue += currentItem.value;
-	}
-	
-	[self maskChart];
+        
+        currentValue += currentItem.value;
+    }
+    
+    [self maskChart];
 }
 
 - (void)_drawLabels
@@ -178,15 +180,15 @@
     }
     
     SPPieChartData * currentItem;
-	CGFloat currentValue = 0;
+    CGFloat currentValue = 0;
     
     for (int i = 0; i < self.datas.count; i++) {
-		currentItem = [self dataItemForIndex:i];
-		UILabel * descriptionLabel = [self descriptionLabelForItemAtIndex:i];
-		[_contentView addSubview:descriptionLabel];
-		currentValue += currentItem.value;
+        currentItem = [self dataItemForIndex:i];
+        UILabel * descriptionLabel = [self descriptionLabelForItemAtIndex:i];
+        [_contentView addSubview:descriptionLabel];
+        currentValue += currentItem.value;
         [_descriptionLabels addObject:descriptionLabel];
-	}
+    }
 }
 
 - (void)_drawEmptyLabel
@@ -197,7 +199,7 @@
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(_outerMargin, _outerMargin, CGRectGetWidth(self.bounds) - 2*_outerMargin, CGRectGetHeight(self.bounds) - 2*_outerMargin)];
     [label setText:self.emptyChartText];
-    [label setFont:self.descriptionTextFont];
+    [label setFont:(self.emptyLabelFont) ? : self.descriptionTextFont];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setTextColor:self.descriptionTextColor];
     [label setBackgroundColor:[UIColor clearColor]];
@@ -210,32 +212,32 @@
 - (void)_recalculateDefaults
 {
     [self _loadDefault];
-	
-	[self.datas enumerateObjectsUsingBlock:^(SPPieChartData * data, NSUInteger idx, BOOL *stop) {
-		_total += data.value;
-	}];
+    
+    [self.datas enumerateObjectsUsingBlock:^(SPPieChartData * data, NSUInteger idx, BOOL *stop) {
+        _total += data.value;
+    }];
 }
 
 - (BOOL)isEmpty
 {
     __block BOOL empty = YES;
     [self.datas enumerateObjectsUsingBlock:^(SPPieChartData * data, NSUInteger idx, BOOL *stop) {
-		empty = data.value < 0.0001;
+        empty = data.value < 0.0001;
         *stop = !empty;
-	}];
+    }];
     
     return empty;
 }
 
 - (UILabel *)descriptionLabelForItemAtIndex:(NSUInteger)index
 {
-	SPPieChartData * currentDataItem = [self dataItemForIndex:index];
+    SPPieChartData * currentDataItem = [self dataItemForIndex:index];
     CGFloat distance = _outterCircleRadius + self.descriptionLabelOffset; // from the center of the chart
     CGFloat centerPercentage = (_currentTotal + currentDataItem.value / 2 ) / _total;
     CGFloat angle = centerPercentage * 2 * M_PI + self.initialRotation; // in radiant
     
-	_currentTotal += currentDataItem.value;
-	
+    _currentTotal += currentDataItem.value;
+    
     NSString * titleText = [NSString stringWithFormat:@"%.0f%%", currentDataItem.value / _total * 100];
     if (self.preferDataDescription && currentDataItem.description) {
         titleText = currentDataItem.dataDescription;
@@ -256,13 +258,13 @@
     [descriptionLabel sizeToFit];
     [descriptionLabel setCenter:center];
     [descriptionLabel setIsAccessibilityElement:NO];
-
-	return descriptionLabel;
+    
+    return descriptionLabel;
 }
 
 - (SPPieChartData *)dataItemForIndex:(NSUInteger)index
 {
-	return self.datas[index];
+    return self.datas[index];
 }
 
 #pragma mark private methods
@@ -274,7 +276,7 @@
                                startPercentage:(CGFloat)startPercentage
                                  endPercentage:(CGFloat)endPercentage
 {
-	CAShapeLayer * circle = [CAShapeLayer layer];
+    CAShapeLayer * circle = [CAShapeLayer layer];
     
     CGPoint center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
     
@@ -291,7 +293,7 @@
     circle.lineWidth    = borderWidth;
     circle.path         = path.CGPath;
     
-	return circle;
+    return circle;
 }
 
 /**
@@ -299,23 +301,25 @@
  */
 - (void)maskChart
 {
-	CAShapeLayer * maskLayer = [self _createCircleLayerWithRadius:_innerCircleRadius + (_outterCircleRadius - _innerCircleRadius)/2
+    CAShapeLayer * maskLayer = [self _createCircleLayerWithRadius:_innerCircleRadius + (_outterCircleRadius - _innerCircleRadius)/2
                                                       borderWidth:_outterCircleRadius - _innerCircleRadius
                                                         fillColor:[UIColor clearColor]
                                                       borderColor:[UIColor blackColor]
                                                   startPercentage:0
                                                     endPercentage:1];
-	_pieLayer.mask = maskLayer;
+    _pieLayer.mask = maskLayer;
     
     // Animate the mask
-	CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-	animation.duration = self.drawingDuration;
-	animation.fromValue = @0;
-	animation.toValue = @1;
-    animation.delegate = self; // to show labels at the end of this animation
-	animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-	animation.removedOnCompletion = YES;
-	[maskLayer addAnimation:animation forKey:@"circleAnimation"];
+    if (self.animate) {
+        CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animation.duration = self.drawingDuration;
+        animation.fromValue = @0;
+        animation.toValue = @1;
+        animation.delegate = self; // to show labels at the end of this animation
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.removedOnCompletion = YES;
+        [maskLayer addAnimation:animation forKey:@"circleAnimation"];
+    }
     
     // NOTE: At the end of this animation, labels will be shown
 }
@@ -326,12 +330,19 @@
     _pieLayer.mask = nil;
     
     // Show labels
+    __block typeof(self) bSelf = self;
     [self.descriptionLabels enumerateObjectsUsingBlock:^(UIView * label, NSUInteger idx, BOOL *stop) {
         
-        [UIView animateWithDuration:0.2 animations:^{
+        void(^actions)(void) = ^{
             [label setAlpha:1];
-        }];
+        };
         
+        if (bSelf.animate) {
+            [UIView animateWithDuration:bSelf.drawingDuration/5.0 animations:actions];
+        }
+        else {
+            actions();
+        }
     }];
 }
 
@@ -363,11 +374,15 @@
         float finalOpacity = (itemIndex < 0) ? fadeInOpacity : (index == itemIndex) ? fadeInOpacity : fadeOutOpacity;
         
         CALayer * pieceLayer = self.piecesLayers[index];
-        [pieceLayer addAnimation:animation forKey:@"opacityAnimation"];
+        if (self.animate) {
+            [pieceLayer addAnimation:animation forKey:@"opacityAnimation"];
+        }
         [pieceLayer setOpacity:finalOpacity];
         
         CALayer * labelLayer = [self.descriptionLabels[index] layer];
-        [labelLayer addAnimation:animation forKey:@"opacityAnimation"];
+        if (self.animate) {
+            [labelLayer addAnimation:animation forKey:@"opacityAnimation"];
+        }
         [labelLayer setOpacity:finalOpacity];
     }
     
@@ -403,7 +418,7 @@
     NSLog(@"%@", NSStringFromCGPoint(touchPoint));
     
     [self.piecesLayers enumerateObjectsUsingBlock:^(CAShapeLayer * layer, NSUInteger idx, BOOL *stop) {
-    
+        
         if (CGPathContainsPoint(layer.path, NULL, touchPoint, NO)) {
             if ([self.delegate respondsToSelector:@selector(SPChartPiePieceSelected:)]) {
                 [self.delegate SPChartPiePieceSelected:idx];

@@ -20,6 +20,7 @@
 @interface SPDetailViewController ()
 @property (weak, nonatomic) SPLineChart * lineChart1;
 @property (weak, nonatomic) SPBarChart * barChart2;
+@property (weak, nonatomic) SPBarChart * barChart3;
 @property (weak, nonatomic) SPPieChart * pieChart1;
 
 @property (weak, nonatomic) SPChartPopup * popup;
@@ -123,6 +124,42 @@
     self.barChart2 = chart;
 }
 
+- (void)showBarChart3
+{
+    SPBarChart * chart = [[SPBarChart alloc] initWithFrame:CHART_FRAME];
+    
+    NSArray * colors = @[ Color2 ];
+    
+    [chart setDatas:@[
+                      [SPBarChartData dataWithValues:@[ @94, ] colors:colors description:@"GEN"],
+                      [SPBarChartData dataWithValues:@[ @71, ] colors:colors description:@"FEB"],
+                      [SPBarChartData dataWithValues:@[ @44, ] colors:colors description:@"MAR"],
+                      [SPBarChartData dataWithValues:@[ @127 ] colors:colors description:@"APR"],
+                      [SPBarChartData dataWithValues:@[ @18  ] colors:colors description:@"MAY"],
+                      [SPBarChartData dataWithValues:@[ @163 ] colors:colors description:@"JUN"],
+                      [SPBarChartData dataWithValues:@[ @125 ] colors:colors description:@"JUL"],
+                      ]];
+    
+    // Set maximum value
+    chart.maxDataValue = 210;
+    chart.upsideDown = YES;
+    
+    // Show axis
+    chart.showAxis = YES;
+    // and section lines inside
+    chart.showSectionLines = YES;
+    
+    // Show empty message, if the chart is empty
+    chart.emptyChartText = @"The chart is empty.";
+    
+    [self.view addSubview:chart];
+    
+    [chart drawChart];
+    
+    chart.delegate = self;
+    self.barChart3 = chart;
+}
+
 - (void)showPieChart1
 {
     self.navigationItem.title = @"Pie Chart";
@@ -159,16 +196,16 @@
 #pragma mark -
 #pragma mark SPChartDelegate
 
-- (void)SPChartLineSelected:(NSInteger)lineIndex touchPoint:(CGPoint)point
+- (void)SPChart:(SPLineChart *)chart lineSelected:(NSInteger)lineIndex touchPoint:(CGPoint)point
 {
-    NSLog(@"Selected line %d", lineIndex);
+    NSLog(@"Selected line %ld", (long)lineIndex);
     
     [self _dismissPopup];
 }
 
-- (void)SPChartLineKeyPointSelected:(NSInteger)pointIndex ofLine:(NSInteger)lineIndex keyPoint:(CGPoint)keyPoint touchPoint:(CGPoint)point
+- (void)SPChart:(SPLineChart *)chart lineKeyPointSelected:(NSInteger)pointIndex ofLine:(NSInteger)lineIndex keyPoint:(CGPoint)keyPoint touchPoint:(CGPoint)point
 {
-    NSLog(@"Selected key point %d in line %d", pointIndex, lineIndex);
+    NSLog(@"Selected key point %ld in line %ld", (long)pointIndex, (long)lineIndex);
     
     [self _dismissPopup];
     
@@ -185,37 +222,65 @@
     [popup setPopupColor:Color4];
     [popup sizeToFit];
     
-    [popup showInView:self.lineChart1 withAnchorPoint:keyPoint];
+    [popup showInView:self.lineChart1 withBottomAnchorPoint:keyPoint];
     self.popup = popup;
 }
 
-- (void)SPChartBarSelected:(NSInteger)barIndex topPoint:(CGPoint)topPoint touchPoint:(CGPoint)touchPoint
+- (void)SPChart:(SPBarChart *)chart barSelected:(NSInteger)barIndex barFrame:(CGRect)barFrame touchPoint:(CGPoint)touchPoint
 {
-    NSLog(@"Selected bar %d", barIndex);
+    NSLog(@"Selected bar %ld", (long)barIndex);
     
     [self _dismissPopup];
-
+    
     // Show a popup
-    SPBarChartData * data = self.barChart2.datas[barIndex];
-    
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.text = [NSString stringWithFormat:@"%@ - %@ - %@", data.values[0], data.values[1], data.values[2]];
-    label.font = self.barChart2.labelFont;
-    label.textColor = [UIColor whiteColor];
-    
-    [label sizeToFit];
-    
-    SPChartPopup * popup = [[SPChartPopup alloc] initWithContentView:label];
-    [popup setPopupColor:Color4];
-    [popup sizeToFit];
-    
-    [popup showInView:self.barChart2 withAnchorPoint:topPoint];
-    self.popup = popup;
+    if (chart == self.barChart2) {
+        
+        SPBarChartData * data = chart.datas[barIndex];
+        
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.text = [NSString stringWithFormat:@"%@ - %@ - %@", data.values[0], data.values[1], data.values[2]];
+        label.font = chart.labelFont;
+        label.textColor = [UIColor whiteColor];
+        
+        [label sizeToFit];
+        
+        SPChartPopup * popup = [[SPChartPopup alloc] initWithContentView:label];
+        [popup setPopupColor:Color4];
+        [popup sizeToFit];
+        
+        [popup showInView:chart withBottomAnchorPoint:CGPointMake(CGRectGetMidX(barFrame), CGRectGetMinY(barFrame))];
+        self.popup = popup;
+    }
+    else if (chart == self.barChart3) {
+        // Upside down chart
+        SPBarChartData * data = chart.datas[barIndex];
+        
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.text = [NSString stringWithFormat:@"%@", data.values[0]];
+        label.font = chart.labelFont;
+        label.textColor = [UIColor whiteColor];
+        
+        [label sizeToFit];
+        
+        SPChartPopup * popup = [[SPChartPopup alloc] initWithContentView:label];
+        [popup setPopupColor:Color4];
+        [popup sizeToFit];
+        
+        [popup showInView:chart withTopAnchorPoint:CGPointMake(CGRectGetMidX(barFrame), CGRectGetMaxY(barFrame))];
+        self.popup = popup;
+    }
 }
 
-- (void)SPChartPiePieceSelected:(NSInteger)pieceIndex
+- (void)SPChart:(SPPieChart *)chart piePieceSelected:(NSInteger)pieceIndex
 {
-    NSLog(@"Selected piece %d", pieceIndex);
+    NSLog(@"Selected piece %ld", (long)pieceIndex);
+}
+
+- (void)SPChartEmptySelection:(id)chart
+{
+    NSLog(@"Touch outside chart bar/line/piece");
+    
+    [self _dismissPopup];
 }
 
 @end

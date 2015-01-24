@@ -26,6 +26,8 @@
 - (void)_setup
 {
     _barLayers = [NSMutableArray new];
+    _upsideDown = NO;
+    _animate = YES;
     
     self.clipsToBounds = YES;
     self.barRadius = 2.0f;
@@ -70,29 +72,31 @@
         NSNumber * grade = self.grades[index];
         UIColor * color = self.barColors[index];
         
-        UIBezierPath * segmentLine = [UIBezierPath bezierPath];
+        gradeSum -= [grade doubleValue];
         
-        // Starts from the bottom
+        UIBezierPath * segmentLine = [UIBezierPath bezierPath];
         [segmentLine setLineWidth:1.0];
         [segmentLine setLineCapStyle:kCGLineCapSquare];
         
-        [segmentLine moveToPoint:CGPointMake(self.frame.size.width / 2.0, self.frame.size.height)];
+        CGPoint topPoint = CGPointMake(self.frame.size.width / 2.0, gradeSum * self.frame.size.height);
+        CGPoint bottomPoint = CGPointMake(self.frame.size.width / 2.0, self.frame.size.height);
         
-        gradeSum -= [grade doubleValue];
-        
-        [segmentLine addLineToPoint:CGPointMake(self.frame.size.width / 2.0, gradeSum * self.frame.size.height)];
+        [segmentLine moveToPoint:(self.upsideDown) ? topPoint : bottomPoint];
+        [segmentLine addLineToPoint:(self.upsideDown) ? bottomPoint : topPoint];
         [segmentLine closePath];
-       
+        
         CAShapeLayer * layer = [self _createShapeLayer];
         layer.path = segmentLine.CGPath;
         layer.strokeColor = color.CGColor;
         
-        CABasicAnimation * pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        pathAnimation.duration = 1.0;
-        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        pathAnimation.fromValue = @0.0f;
-        pathAnimation.toValue = @1.0f;
-        [layer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+        if (self.animate) {
+            CABasicAnimation * pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+            pathAnimation.duration = self.drawingDuration;
+            pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            pathAnimation.fromValue = @0.0f;
+            pathAnimation.toValue = @1.0f;
+            [layer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+        }
         
         layer.strokeEnd = 1.0;
         

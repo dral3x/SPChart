@@ -15,20 +15,19 @@
 
 - (instancetype)initWithContentView:(UIView *)contentView;
 
-@property (nonatomic, strong, readonly) UIView * contentView;
+@property (strong, nonatomic, readonly) UIView * contentView;
 
-@property (nonatomic, copy) UIColor * popupColor;
-@property (nonatomic, copy) UIColor * shadowColor;
+@property (copy, nonatomic) UIColor * popupColor;
+@property (copy, nonatomic) UIColor * shadowColor;
 
-@property (nonatomic, assign) CGFloat xPadding; // space added on top and bottom sides
-@property (nonatomic, assign) CGFloat yPadding; // space added on left and right sides
-
-- (void)setAnchorPoint:(CGPoint)point;
-- (void)setAnchorPoint:(CGPoint)point withGap:(CGFloat)gap;
+@property (assign, nonatomic) CGFloat xPadding; // space added on top and bottom sides
+@property (assign, nonatomic) CGFloat yPadding; // space added on left and right sides
 
 - (void)showInView:(UIView *)superview;
-- (void)showInView:(UIView *)superview withAnchorPoint:(CGPoint)anchor;
-- (void)showInView:(UIView *)superview withAnchorPoint:(CGPoint)anchor andGap:(CGFloat)anchorGap;
+- (void)showInView:(UIView *)superview withBottomAnchorPoint:(CGPoint)anchor;
+- (void)showInView:(UIView *)superview withBottomAnchorPoint:(CGPoint)anchor andGap:(CGFloat)anchorGap;
+- (void)showInView:(UIView *)superview withTopAnchorPoint:(CGPoint)anchor;
+- (void)showInView:(UIView *)superview withTopAnchorPoint:(CGPoint)anchor andGap:(CGFloat)anchorGap;
 
 - (void)dismiss;
 

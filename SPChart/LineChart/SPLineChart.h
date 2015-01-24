@@ -39,6 +39,12 @@
 
 /// @name Customization
 
+/*
+ When YES, the drawing of the chart will be animated. When NO, no animation will occure.
+ Default YES
+ */
+@property (assign, nonatomic) BOOL animate;
+
 /**
  Duration of the drawing animation. Default value is 1.0 second
  */
@@ -92,7 +98,7 @@
 /*
  yLabelFormatter will format labels text on the Y axis
  */
-@property (nonatomic, copy) SPYLabelFormatter yLabelFormatter;
+@property (nonatomic, copy) SPChartLabelFormatter yLabelFormatter;
 
 /*
  showSectionLines enables the drawing of the dotted lines in the background
@@ -117,7 +123,11 @@
 
 - (BOOL)isEmpty;
 
-
+/*
+ emptyLabelFont will apply on the label that display `emptyChartText` message.
+ Default nil, means the same as `labelFont`
+ */
+@property (nonatomic, strong) UIFont * emptyLabelFont;
 
 
 /// @name Delegate

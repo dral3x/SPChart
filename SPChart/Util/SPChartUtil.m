@@ -24,6 +24,19 @@
 #pragma clang diagnostic pop
 }
 
++ (CGSize)sizeOfLabelWithText:(NSString *)text font:(UIFont *)font
+{
+    if ([text respondsToSelector:@selector(sizeWithAttributes:)]) {
+        return [text sizeWithAttributes:@{ NSFontAttributeName : font }];
+    }
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    // Fallback
+    return [text sizeWithFont:font];
+#pragma clang diagnostic pop
+}
+
 + (void)layersCleanupWithCollection:(NSMutableArray *)array
 {
     [array makeObjectsPerformSelector:@selector(removeFromSuperlayer)];

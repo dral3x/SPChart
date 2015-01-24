@@ -117,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				FA0F2C2D194DD598006E8BB2 /* BarChart */,
-				FA0F2C34194DD598006E8BB2 /* Legend */,
 				FA0F2C35194DD598006E8BB2 /* LineChart */,
 				FA0F2C3A194DD598006E8BB2 /* PieChart */,
 				FA0F2C3F194DD598006E8BB2 /* Popup */,
@@ -141,13 +140,6 @@
 				FA0F2C33194DD598006E8BB2 /* SPBarChartData.m */,
 			);
 			path = BarChart;
-			sourceTree = "<group>";
-		};
-		FA0F2C34194DD598006E8BB2 /* Legend */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Legend;
 			sourceTree = "<group>";
 		};
 		FA0F2C35194DD598006E8BB2 /* LineChart */ = {

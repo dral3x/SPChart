@@ -15,6 +15,7 @@
 
 - (void)showBarChart1;
 - (void)showBarChart2;
+- (void)showBarChart3;
 
 - (void)showPieChart1;
 

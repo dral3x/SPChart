@@ -26,6 +26,9 @@
     if ([@"demoBarChart2" isEqualToString:segue.identifier]) {
         [viewController showBarChart2];
     }
+    if ([@"demoBarChart3" isEqualToString:segue.identifier]) {
+        [viewController showBarChart3];
+    }
     
     
     

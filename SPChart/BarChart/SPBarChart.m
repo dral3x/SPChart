@@ -18,6 +18,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 {
     NSMutableArray * _labels;
     NSMutableArray * _bars;
+    NSMutableArray * _lines;
     
     //
     CGFloat _barXSpace;
@@ -45,15 +46,21 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 {
     self.backgroundColor = [UIColor clearColor];
     self.clipsToBounds = YES;
-
+    
     self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
     
     self.yLabelFormatter = ^NSString *(NSInteger dataValue) {
         return [NSString stringWithFormat:@"%ld", (long)dataValue];
     };
-
+    self.barValueFormatter = ^NSString *(NSInteger dataValue) {
+        return [NSString stringWithFormat:@"%ld", (long)dataValue];
+    };
+    
     _datas = [NSArray new];
     _maxDataValue = 10;
+    
+    _drawingDuration = 1.0;
+    _animate = YES;
     
     // Labels
     _labels = [NSMutableArray new];
@@ -64,12 +71,13 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     self.yLabelCount = 4;
     self.showXLabels = YES;
     self.showYLabels = YES;
-
+    
     // Bars
     _bars = [NSMutableArray new];
     _barRadius = 2.0f;
-
+    
     // Axis lines
+    _lines = [NSMutableArray new];
     self.axisColor = [UIColor lightGrayColor];
     self.showAxis = NO;
     
@@ -91,9 +99,12 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 
 - (void)setDatas:(NSArray *)datas
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     for (id data in datas) {
         NSAssert([data isKindOfClass:[SPBarChartData class]], @"Invalid data object. Array must contain only SPBarChartData instances");
     }
+#pragma clang diagnostic pop
     
     _datas = datas;
     
@@ -108,6 +119,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     // Cleanup
     [SPChartUtil viewsCleanupWithCollection:_labels];
     [SPChartUtil viewsCleanupWithCollection:_bars];
+    [SPChartUtil layersCleanupWithCollection:_lines];
     
     // Recalculate some data
     _barXSpace = (self.frame.size.width - _chartMargin.left - _chartMargin.right) / [self.datas count];
@@ -119,7 +131,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     if (self.showYLabels) {
         [self _strokeYLabels];
     }
-
+    
     BOOL isChartEmpty = [self isEmpty] && self.emptyChartText != nil;
     
     // Add background lines
@@ -142,6 +154,8 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 
 - (void)_strokeXLabels
 {
+    CGFloat yCenter = (!self.upsideDown) ? CGRectGetHeight(self.frame) - _chartMargin.bottom/2.0 : _chartMargin.top/2.0;
+    
     int labelAddCount = 0;
     for (int index = 0; index < self.datas.count; index++) {
         labelAddCount += 1;
@@ -151,17 +165,17 @@ const CGFloat spBarChartYLabelMargin = 8.0;
             NSString * labelText = data.dataDescription;
             
             UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];
-            label.font = _labelFont;
-            label.textColor = _labelTextColor;
+            [label setFont:_labelFont];
+            [label setTextColor:_labelTextColor];
             [label setBackgroundColor:[UIColor clearColor]];
-            label.text = labelText;
+            [label setText:labelText];
             [label sizeToFit];
             
             CGFloat labelXPosition  = (index *  _barXSpace + _chartMargin.left + _barXSpace /2.0 );
             
             label.center = CGPointMake(
                                        labelXPosition,
-                                       self.frame.size.height - _chartMargin.bottom/2
+                                       yCenter
                                        );
             labelAddCount = 0;
             
@@ -176,22 +190,24 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     CGFloat yLabelSectionHeight = (self.frame.size.height - self.chartMargin.top - self.chartMargin.bottom) / self.yLabelCount;
     CGFloat yLabelHeight = ceilf([SPChartUtil heightOfLabelWithFont:self.labelFont]);
     
-    for (int index = 0; index < self.yLabelCount; index++) {
+    for (NSInteger index = 0; index < self.yLabelCount; index++) {
         
-        NSString * labelText = _yLabelFormatter((float)self.maxDataValue * ( (self.yLabelCount - index) / (float)self.yLabelCount ));
-        
+        NSInteger labelIndex = (!self.upsideDown) ? (self.yLabelCount - index) : index + 1;
+        NSString * labelText = _yLabelFormatter((float)self.maxDataValue * ( labelIndex / (float)self.yLabelCount ));
+        CGFloat y = (!self.upsideDown) ? yLabelSectionHeight * index + _chartMargin.top - yLabelHeight/2.0 :
+                                         yLabelSectionHeight * (index + 1) + _chartMargin.top - yLabelHeight/2.0;
         
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                     spBarChartYLabelMargin,
-                                                                    yLabelSectionHeight * index + _chartMargin.top - yLabelHeight/2.0,
+                                                                    y,
                                                                     _chartMargin.left - spBarChartYLabelMargin*2,
                                                                     yLabelHeight
                                                                     )];
-        label.font = _labelFont;
-        label.textColor = _labelTextColor;
+        [label setFont:self.labelFont];
+        [label setTextColor:self.labelTextColor];
         [label setTextAlignment:NSTextAlignmentRight];
         [label setBackgroundColor:[UIColor clearColor]];
-        label.text = labelText;
+        [label setText:labelText];
         
         [_labels addObject:label];
         [self addSubview:label];
@@ -208,11 +224,11 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     for (int index = 0; index < self.yLabelCount; index++) {
         
         CAShapeLayer * lineLayer = [self _createShapeLayer];
-        lineLayer.opacity       = 0.85;
+        lineLayer.opacity = 0.85;
         
         UIBezierPath * linePath = [UIBezierPath bezierPath];
         
-        CGFloat y = yLabelSectionHeight * index + _chartMargin.top;
+        CGFloat y = (!self.upsideDown) ? yLabelSectionHeight * index + _chartMargin.top : yLabelSectionHeight * (index + 1) + _chartMargin.bottom;
         [linePath moveToPoint:CGPointMake(_chartMargin.left, y)];
         [linePath addLineToPoint:CGPointMake(self.frame.size.width - _chartMargin.right, y)];
         
@@ -226,15 +242,18 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         lineLayer.lineDashPhase = 4.0f;
         
         // Animate
-        CABasicAnimation * pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        pathAnimation.duration = 0.5;
-        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        pathAnimation.fromValue = @0.0f;
-        pathAnimation.toValue = @1.0f;
-        [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+        if (self.animate) {
+            CABasicAnimation * pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+            pathAnimation.duration = self.drawingDuration/2.0;
+            pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            pathAnimation.fromValue = @0.0f;
+            pathAnimation.toValue = @1.0f;
+            [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+        }
         
         lineLayer.strokeEnd = 1.0;
         
+        [_lines addObject:lineLayer];
         [self.layer addSublayer:lineLayer];
     }
 }
@@ -244,14 +263,14 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     CGFloat chartCavanHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom;
     
     [self.datas enumerateObjectsUsingBlock:^(SPBarChartData * data, NSUInteger index, BOOL *stop) {
-
+        
         CGFloat barHeightScale = [self _scaleFactorOfBarWithData:data maxValue:self.maxDataValue]; // 0 .. 1
         
         CGFloat barWidth = (self.barWidth > 0) ? self.barWidth : _barXSpace * 0.75; // fixed width : dynamic width
         CGFloat barHeight = chartCavanHeight * barHeightScale;
         
         CGFloat barXPosition = barXPosition = _chartMargin.left + index * _barXSpace + (_barXSpace - barWidth)/2.0;
-        CGFloat barYPosition = _chartMargin.top + chartCavanHeight * (1.0f - barHeightScale);
+        CGFloat barYPosition = _chartMargin.top + (!self.upsideDown ? chartCavanHeight * (1.0f - barHeightScale) : 0.0);
         
         
         SPBar * bar = [[SPBar alloc] initWithFrame:CGRectMake(barXPosition, barYPosition, barWidth, barHeight)];
@@ -264,11 +283,38 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         bar.grades = [self _scaleData:data];
         bar.barColors = data.colors;
         
+        // Set animation options
+        bar.upsideDown = self.upsideDown;
+        bar.animate = self.animate;
+        bar.drawingDuration = self.drawingDuration;
+        
         // For click index, set the tag id
         bar.tag = index;
         
         [_bars addObject:bar];
         [self addSubview:bar];
+        
+        // Bar labels
+        if (self.showBarValues) {
+            
+            NSString * labelText = self.barValueFormatter((float)[data cumulatedValue]);
+            CGSize labelSize = [SPChartUtil sizeOfLabelWithText:labelText font:self.labelFont];
+            
+            UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
+                                                                        CGRectGetMinX(bar.frame) + (barWidth - labelSize.width)/2.0,
+                                                                        (self.upsideDown) ? CGRectGetMaxY(bar.frame) : CGRectGetMinY(bar.frame) - labelSize.height,
+                                                                        labelSize.width,
+                                                                        labelSize.height
+                                                                        )];
+            [label setFont:self.labelFont];
+            [label setTextColor:(self.barValueTextColor) ? : self.labelTextColor];
+            [label setTextAlignment:NSTextAlignmentLeft];
+            [label setBackgroundColor:[UIColor clearColor]];
+            [label setText:labelText];
+            
+            [_labels addObject:label];
+            [self addSubview:label];
+        }
         
     }];
 }
@@ -279,25 +325,29 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     UIBezierPath * progressline = [UIBezierPath bezierPath];
     
-    [progressline moveToPoint:CGPointMake(_chartMargin.left, self.frame.size.height - _chartMargin.bottom)];
-    [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMargin.right, self.frame.size.height - _chartMargin.bottom)];
-
+    CGFloat bottomY = (!self.upsideDown) ? self.frame.size.height - _chartMargin.bottom : _chartMargin.top;
+    
+    [progressline moveToPoint:CGPointMake(_chartMargin.left, bottomY)];
+    [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMargin.right, bottomY)];
+    
     [progressline setLineWidth:1.0];
     [progressline setLineCapStyle:kCGLineCapSquare];
     
     bottomLine.path = progressline.CGPath;
     bottomLine.strokeColor = self.axisColor.CGColor;
     
-    
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 0.5;
-    pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    pathAnimation.fromValue = @0.0f;
-    pathAnimation.toValue = @1.0f;
-    [bottomLine addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+    if (self.animate) {
+        CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        pathAnimation.duration = self.drawingDuration/2.0;
+        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        pathAnimation.fromValue = @0.0f;
+        pathAnimation.toValue = @1.0f;
+        [bottomLine addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+    }
     
     bottomLine.strokeEnd = 1.0;
     
+    [_lines addObject:bottomLine];
     [self.layer addSublayer:bottomLine];
     
     
@@ -307,25 +357,30 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     UIBezierPath * progressLeftline = [UIBezierPath bezierPath];
     
-    [progressLeftline moveToPoint:CGPointMake(_chartMargin.left, self.frame.size.height - _chartMargin.bottom)];
-    [progressLeftline addLineToPoint:CGPointMake(_chartMargin.left,  _chartMargin.top/2)];
+    CGFloat leftStartY = (!self.upsideDown) ? self.frame.size.height - _chartMargin.bottom : _chartMargin.top;
+    CGFloat leftEndY = (!self.upsideDown) ? _chartMargin.top/2 : self.frame.size.height - _chartMargin.bottom/2.0;
+    
+    [progressLeftline moveToPoint:CGPointMake(_chartMargin.left, leftStartY)];
+    [progressLeftline addLineToPoint:CGPointMake(_chartMargin.left, leftEndY)];
     
     [progressLeftline setLineWidth:1.0];
     [progressLeftline setLineCapStyle:kCGLineCapSquare];
-
+    
     leftLine.path = progressLeftline.CGPath;
     leftLine.strokeColor = self.axisColor.CGColor;
     
-    
-    CABasicAnimation *pathLeftAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathLeftAnimation.duration = 0.5;
-    pathLeftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    pathLeftAnimation.fromValue = @0.0f;
-    pathLeftAnimation.toValue = @1.0f;
-    [leftLine addAnimation:pathLeftAnimation forKey:@"strokeEndAnimation"];
+    if (self.animate) {
+        CABasicAnimation *pathLeftAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        pathLeftAnimation.duration = self.drawingDuration/2.0;
+        pathLeftAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        pathLeftAnimation.fromValue = @0.0f;
+        pathLeftAnimation.toValue = @1.0f;
+        [leftLine addAnimation:pathLeftAnimation forKey:@"strokeEndAnimation"];
+    }
     
     leftLine.strokeEnd = 1.0;
     
+    [_lines addObject:leftLine];
     [self.layer addSublayer:leftLine];
 }
 
@@ -339,7 +394,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         NSNumber * scaled = @( [singleValue floatValue] / max );
         [scaledData addObject:scaled];
     }
-
+    
     return scaledData;
 }
 
@@ -373,8 +428,8 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     const CGFloat gap = 10.0f;
     
-    CGFloat labelWidth = self.frame.size.width - _chartMargin.left - _chartMargin.right - 2*gap;
-    CGFloat labelHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom - 2*gap;
+    CGFloat labelWidth = CGRectGetWidth(self.frame) - _chartMargin.left - _chartMargin.right - 2*gap;
+    CGFloat labelHeight = CGRectGetHeight(self.frame) - _chartMargin.top - _chartMargin.bottom - 2*gap;
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                 _chartMargin.left + gap,
@@ -382,12 +437,12 @@ const CGFloat spBarChartYLabelMargin = 8.0;
                                                                 labelWidth,
                                                                 labelHeight
                                                                 )];
-    label.font = _labelFont;
-    label.textColor = _labelTextColor;
+    [label setFont:(self.emptyLabelFont) ? : self.labelFont];
+    [label setTextColor:self.labelTextColor];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setBackgroundColor:[UIColor clearColor]];
-    label.numberOfLines = 0;
-    label.text = self.emptyChartText;
+    [label setNumberOfLines:0];
+    [label setText:self.emptyChartText];
     
     [_labels addObject:label];
     [self addSubview:label];
@@ -402,7 +457,6 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     [super touchesBegan:touches withEvent:event];
 }
 
-
 - (void)touchPoint:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // Get the point user touched
@@ -410,8 +464,29 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     CGPoint touchPoint = [touch locationInView:self];
     UIView * subview = [self hitTest:touchPoint withEvent:nil];
     
-    if ([subview isKindOfClass:[SPBar class]] && [self.delegate respondsToSelector:@selector(SPChartBarSelected:topPoint:touchPoint:)]) {
-        [self.delegate SPChartBarSelected:subview.tag topPoint:CGPointMake(CGRectGetMidX(subview.frame), CGRectGetMinY(subview.frame)) touchPoint:touchPoint];
+    if ([subview isKindOfClass:[SPBar class]]) {
+        if ([self.delegate respondsToSelector:@selector(SPChart:barSelected:barFrame:touchPoint:)]) {
+            [self.delegate SPChart:self barSelected:subview.tag barFrame:subview.frame touchPoint:touchPoint];
+        }
+    }
+    else {
+        if ([self.delegate respondsToSelector:@selector(SPChartEmptySelection:)]) {
+            [self.delegate SPChartEmptySelection:self];
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark Resize detection
+
+- (void)setBounds:(CGRect)newBounds
+{
+    BOOL isResize = !CGSizeEqualToSize(newBounds.size, self.bounds.size);
+    
+    [super setBounds:newBounds];
+    
+    if (isResize) {
+        [self drawChart];
     }
 }
 

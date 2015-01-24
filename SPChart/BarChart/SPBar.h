@@ -12,6 +12,9 @@
 @interface SPBar : UIView
 
 @property (nonatomic, assign) CGFloat barRadius;
+@property (assign, nonatomic) BOOL upsideDown;
+@property (assign, nonatomic) BOOL animate;
+@property (assign, nonatomic) NSTimeInterval drawingDuration;
 
 @property (nonatomic, strong) NSArray * grades;
 @property (nonatomic, strong) NSArray * barColors;

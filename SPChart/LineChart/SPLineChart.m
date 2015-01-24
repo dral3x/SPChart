@@ -75,10 +75,11 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     self.yLabelFormatter = ^NSString *(NSInteger dataValue) {
         return [NSString stringWithFormat:@"%ld", (long)dataValue];
     };
-
+    
     self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
     
     self.drawingDuration = 1.0f;
+    self.animate = YES;
     
     // Axis lines
     self.showXAxis = YES;
@@ -90,7 +91,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     self.labelTextColor = [UIColor grayColor];
     self.labelFont = [UIFont systemFontOfSize:11.0f];
     self.yLabelCount = 4;
-
+    
     
     // Section lines
     self.sectionLinesColor = [UIColor lightGrayColor];
@@ -112,14 +113,20 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     [datas enumerateObjectsUsingBlock:^(SPLineChartData * data, NSUInteger idx, BOOL *stop) {
         self.yMaxValue = MAX(self.yMaxValue, data.maxValue);
     }];
-
+    
     _xLabelWidth = floorf((CGRectGetWidth(self.frame) - self.chartMargin.left - self.chartMargin.right) / [xValues count]);
 }
 
 - (void)drawChart
 {
-    [self _recalculateCanvas];
+    // Cleanup
+    [SPChartUtil viewsCleanupWithCollection:_labels];
+    [SPChartUtil layersCleanupWithCollection:_chartLineArray];
+    [SPChartUtil layersCleanupWithCollection:_chartPointArray];
     
+    // Recalculate some data
+    self.canvasWidth = self.frame.size.width - _chartMargin.left - _chartMargin.right;
+    self.canvasHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom;
     BOOL isChartEmpty = [self isEmpty] && self.emptyChartText != nil;
     
     // Add axis and labels
@@ -156,7 +163,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     __block BOOL empty = YES;
     
     [self.datas enumerateObjectsUsingBlock:^(SPLineChartData * data, NSUInteger idx, BOOL *stop) {
-       
+        
         empty = [data isEmpty];
         *stop = !empty;
         
@@ -177,19 +184,21 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     CGFloat labelHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom - 2*gap;
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
-                                                               _chartMargin.left + gap, // left
-                                                               _chartMargin.top + gap, // top
-                                                               labelWidth, // width
-                                                               labelHeight // height
-                                                               )];
+                                                                _chartMargin.left + gap, // left
+                                                                _chartMargin.top + gap, // top
+                                                                labelWidth, // width
+                                                                labelHeight // height
+                                                                )];
     [label setTextAlignment:NSTextAlignmentCenter];
-    [label setFont:self.labelFont];
+    [label setFont:(self.emptyLabelFont) ? : self.labelFont];
     [label setTextColor:self.labelTextColor];
     [label setBackgroundColor:[UIColor clearColor]];
     [label setAccessibilityElementsHidden:YES];
+    [label setNumberOfLines:0];
     [label setText:self.emptyChartText];
     
     [self addSubview:label];
+    [self.labels addObject:label];
 }
 
 - (void)_strokeLineAndPointsWithData:(SPLineChartData *)chartData
@@ -203,7 +212,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     [linePath setLineCapStyle:kCGLineCapRound];
     [linePath setLineJoinStyle:kCGLineJoinRound];
     [self.linesPath addObject:linePath];
-
+    
     
     // Draw points
     CAShapeLayer * pointLayer = [self _createPointLayerWithLineWidth:chartData.lineWidth];
@@ -217,7 +226,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     
     
     
-
+    
     NSInteger yValue;
     CGFloat innerGrade;
     
@@ -302,30 +311,35 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     
     [self.touchablePoints addObject:[linePointsArray copy]];
     
-
+    
     lineLayer.path = linePath.CGPath;
     pointLayer.path = pointPath.CGPath;
-
+    
     // setup the color of the chart line
     lineLayer.strokeColor = chartData.color.CGColor;
     pointLayer.strokeColor = chartData.color.CGColor;
     
     // Animates the drawing
     CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animation.duration = self.drawingDuration;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.fromValue = @0.0f;
-    animation.toValue = @1.0f;
-    animation.removedOnCompletion = YES;
+    if (self.animate) {
+        animation.duration = self.drawingDuration;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.fromValue = @0.0f;
+        animation.toValue = @1.0f;
+        animation.removedOnCompletion = YES;
+        
+        [lineLayer addAnimation:animation forKey:@"strokeEndAnimation"];
+    }
     
-    [lineLayer addAnimation:animation forKey:@"strokeEndAnimation"];
     lineLayer.strokeEnd = 1.0;
     
-    if (chartData.pointStyle != SPLineChartPointStyleNone) {
-        [pointLayer addAnimation:animation forKey:@"strokeEndAnimation"];
+    if (self.animate) {
+        if (chartData.pointStyle != SPLineChartPointStyleNone) {
+            [pointLayer addAnimation:animation forKey:@"strokeEndAnimation"];
+        }
     }
     pointLayer.strokeEnd = 1.0;
-
+    
     [self.layer addSublayer:pointLayer];
     [self.layer addSublayer:lineLayer];
 }
@@ -357,7 +371,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
 - (void)_strokeXLabels
 {
     [self.xValues enumerateObjectsUsingBlock:^(NSString * xValue, NSUInteger i, BOOL *stop) {
-       
+        
         CGFloat centerX = self.chartMargin.left + (i * _xLabelWidth) + _xLabelWidth/2;
         CGFloat centerY = self.frame.size.height - self.chartMargin.bottom/2;
         
@@ -431,23 +445,26 @@ const CGFloat spLineChartYLabelMargin = 8.0;
         lineLayer.lineDashPhase = 4.0f;
         
         // Animate
-        CABasicAnimation * pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        pathAnimation.duration = 0.5;
-        pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-        pathAnimation.fromValue = @0.0f;
-        pathAnimation.toValue = @1.0f;
-        [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+        if (self.animate) {
+            CABasicAnimation * pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+            pathAnimation.duration = 0.5;
+            pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+            pathAnimation.fromValue = @0.0f;
+            pathAnimation.toValue = @1.0f;
+            [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+        }
         
         lineLayer.strokeEnd = 1.0;
         
         [self.layer addSublayer:lineLayer];
+        [self.chartLineArray addObject:lineLayer];
     }
 }
 
 - (void)_strokeXAxis
 {
     CAShapeLayer * bottomLine = [self _createLineLayerWithLineWidth:1.0f];
-
+    
     UIBezierPath * progressline = [UIBezierPath bezierPath];
     
     [progressline moveToPoint:CGPointMake(self.chartMargin.left, self.frame.size.height - self.chartMargin.bottom)];
@@ -459,18 +476,20 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     bottomLine.path = progressline.CGPath;
     bottomLine.strokeColor = self.axisColor.CGColor;
     
-    
-    CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animation.duration = 0.5;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.fromValue = @0.0f;
-    animation.toValue = @1.0f;
-    animation.removedOnCompletion = YES;
-    [bottomLine addAnimation:animation forKey:@"strokeEndAnimation"];
+    if (self.animate) {
+        CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animation.duration = 0.5;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.fromValue = @0.0f;
+        animation.toValue = @1.0f;
+        animation.removedOnCompletion = YES;
+        [bottomLine addAnimation:animation forKey:@"strokeEndAnimation"];
+    }
     
     bottomLine.strokeEnd = 1.0;
     
     [self.layer addSublayer:bottomLine];
+    [self.chartLineArray addObject:bottomLine];
 }
 
 - (void)_strokeYAxis
@@ -488,24 +507,20 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     leftLine.path = progressLeftline.CGPath;
     leftLine.strokeColor = self.axisColor.CGColor;
     
-    
-    CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animation.duration = 0.5;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.fromValue = @0.0f;
-    animation.toValue = @1.0f;
-    animation.removedOnCompletion = YES;
-    [leftLine addAnimation:animation forKey:@"strokeEndAnimation"];
+    if (self.animate) {
+        CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        animation.duration = 0.5;
+        animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        animation.fromValue = @0.0f;
+        animation.toValue = @1.0f;
+        animation.removedOnCompletion = YES;
+        [leftLine addAnimation:animation forKey:@"strokeEndAnimation"];
+    }
     
     leftLine.strokeEnd = 1.0;
     
     [self.layer addSublayer:leftLine];
-}
-
-- (void)_recalculateCanvas
-{
-    self.canvasWidth = self.frame.size.width - _chartMargin.left - _chartMargin.right;
-    self.canvasHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom;
+    [self.chartLineArray addObject:leftLine];
 }
 
 #pragma mark -
@@ -546,8 +561,8 @@ const CGFloat spLineChartYLabelMargin = 8.0;
                     BOOL pointContainsPath = CGPathContainsPoint(path.CGPath, NULL, p1, NO);
                     
                     if (pointContainsPath) {
-                        if ([self.delegate respondsToSelector:@selector(SPChartLineSelected:touchPoint:)]) {
-                            [self.delegate SPChartLineSelected:[_linesPath indexOfObject:path] touchPoint:touchPoint];
+                        if ([self.delegate respondsToSelector:@selector(SPChart:lineSelected:touchPoint:)]) {
+                            [self.delegate SPChart:self lineSelected:[_linesPath indexOfObject:path] touchPoint:touchPoint];
                         }
                         return;
                     }
@@ -576,15 +591,30 @@ const CGFloat spLineChartYLabelMargin = 8.0;
             float distance = MIN(distanceToP1, distanceToP2);
             
             if (distance <= 22.0) { // magic number? it's half of 44, the min size Apple suggests for touchable areas
-                if ([self.delegate respondsToSelector:@selector(SPChartLineKeyPointSelected:ofLine:keyPoint:touchPoint:)]) {
-                    [self.delegate SPChartLineKeyPointSelected:(distance == distanceToP2 ? i + 1 : i)
-                                                        ofLine:p
-                                                      keyPoint:(distance == distanceToP2 ? p2 : p1)
-                                                    touchPoint:touchPoint];
+                if ([self.delegate respondsToSelector:@selector(SPChart:lineKeyPointSelected:ofLine:keyPoint:touchPoint:)]) {
+                    [self.delegate SPChart:self
+                      lineKeyPointSelected:(distance == distanceToP2 ? i + 1 : i)
+                                    ofLine:p
+                                  keyPoint:(distance == distanceToP2 ? p2 : p1)
+                                touchPoint:touchPoint];
                 }
                 return;
             }
         }
+    }
+}
+
+#pragma mark -
+#pragma mark Resize detection
+
+- (void)setBounds:(CGRect)newBounds
+{
+    BOOL isResize = !CGSizeEqualToSize(newBounds.size, self.bounds.size);
+    
+    [super setBounds:newBounds];
+    
+    if (isResize) {
+        [self drawChart];
     }
 }
 

@@ -37,19 +37,39 @@
 
 
 
-
 /// @name Customize
+
+/*
+ When YES, the drawing of the chart will be animated. When NO, no animation will occure.
+ Default YES
+ */
+@property (assign, nonatomic) BOOL animate;
+
+/**
+ Duration of the drawing animation. Default value is 1.0 second
+ */
+@property (nonatomic, assign) NSTimeInterval drawingDuration;
 
 /*
  yLabelFormatter will format labels text on the Y axis
  */
-@property (nonatomic, copy) SPYLabelFormatter yLabelFormatter;
+@property (nonatomic, copy) SPChartLabelFormatter yLabelFormatter;
+
+/*
+ barValueFormatter will format labels text on the bars
+ */
+@property (nonatomic, copy) SPChartLabelFormatter barValueFormatter;
 
 /**
  Margin between the canvas area and the full view.
  Axis are fitted inside left and bottom `chartMargin`.
  */
 @property (nonatomic, assign) UIEdgeInsets chartMargin;
+
+/**
+ If YES, chart will be draw upside down.
+ */
+@property (assign, nonatomic) BOOL upsideDown;
 
 /// @name Customize bars
 
@@ -68,7 +88,16 @@
  */
 @property (nonatomic, copy) UIColor * barBackgroundColor;
 
+/*
+ showBarValues defines if labels on top/bottom of each bar should be displayed of not
+ */
+@property (assign, nonatomic) BOOL showBarValues;
 
+/*
+ barValueTextColor changes the bar value text color.
+ Default value is nil, meaning same as `labelTextColor`.
+ */
+@property (nonatomic, copy) UIColor * barValueTextColor;
 
 
 /// @name Customize axis
@@ -140,7 +169,11 @@
  */
 @property (nonatomic, copy) NSString * emptyChartText;
 
-
+/*
+ emptyLabelFont will apply on the label that display `emptyChartText` message.
+ Default nil, means the same as `labelFont`
+ */
+@property (nonatomic, strong) UIFont * emptyLabelFont;
 
 
 /// @name Delegate

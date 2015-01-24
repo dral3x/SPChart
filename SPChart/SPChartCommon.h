@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Alessandro Calzavara. All rights reserved.
 //
 
-#ifndef SPChartDemo_SPChartCommon_h
-#define SPChartDemo_SPChartCommon_h
+#ifndef SPChartCommon_h
+#define SPChartCommon_h
 
-typedef NSString *(^SPYLabelFormatter)(NSInteger dataValue);
+typedef NSString *(^SPChartLabelFormatter)(NSInteger dataValue);
 
 
 #endif
