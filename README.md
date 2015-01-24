@@ -39,7 +39,7 @@ There is also some nice **accessories**:
 
 There are only 3 types of chart available: lines, bars and pie.
 
-All charts works with **NSInteger** values.
+All charts works with **NSInteger** positive values.
 
 
 
@@ -65,7 +65,7 @@ All you have to do is
 
 1. Add a pod entry for SPChart to your Podfile `pod 'SPChart'`
 2. Install pod(s) by running `pod install`.
-3. Add `#import <SPChart.h>` wherever you need to use one of the supported charts.
+3. Add `#import <SPChart/SPChart.h>` wherever you need to use one of the supported charts.
 
 
 ### Copy the SPChart folder to your project
