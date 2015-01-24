@@ -38,28 +38,9 @@
 
 @implementation SPPieChart
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self _setup];
-    }
-    return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self _setup];
-    }
-    return self;
-}
-
 - (void)_setup
 {
-    self.clipsToBounds = YES;
-    self.userInteractionEnabled = YES;
+    [super _setup];
     
     self.datas = [NSArray new]; // empty for the moment
     
@@ -71,9 +52,6 @@
     self.descriptionTextFont = [UIFont systemFontOfSize:12.0];
     self.preferDataDescription = NO;
     self.hideDescriptionTexts = NO;
-    
-    self.animate = YES;
-    self.drawingDuration = 1.0;
     
     self.initialAngle = 0.0;
     self.randomInitialAngle = YES;
@@ -418,10 +396,10 @@
     NSLog(@"%@", NSStringFromCGPoint(touchPoint));
     
     [self.piecesLayers enumerateObjectsUsingBlock:^(CAShapeLayer * layer, NSUInteger idx, BOOL *stop) {
-        
+     
         if (CGPathContainsPoint(layer.path, NULL, touchPoint, NO)) {
-            if ([self.delegate respondsToSelector:@selector(SPChartPiePieceSelected:)]) {
-                [self.delegate SPChartPiePieceSelected:idx];
+            if ([self.delegate respondsToSelector:@selector(SPChart:piePieceSelected:)]) {
+                [self.delegate SPChart:self piePieceSelected:idx];
             }
             *stop = YES;
         }

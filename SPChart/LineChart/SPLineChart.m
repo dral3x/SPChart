@@ -38,29 +38,9 @@ const CGFloat spLineChartYLabelMargin = 8.0;
 
 #pragma mark initialization
 
-- (id)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self _setup];
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self _setup];
-    }
-    return self;
-}
-
 - (void)_setup
 {
-    self.backgroundColor = [UIColor clearColor];
-    self.clipsToBounds = YES;
-    self.userInteractionEnabled = YES;
+    [super _setup];
     
     self.chartLineArray = [NSMutableArray new];
     self.chartPointArray = [NSMutableArray new];
@@ -76,11 +56,6 @@ const CGFloat spLineChartYLabelMargin = 8.0;
         return [NSString stringWithFormat:@"%ld", (long)dataValue];
     };
     
-    self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
-    
-    self.drawingDuration = 1.0f;
-    self.animate = YES;
-    
     // Axis lines
     self.showXAxis = YES;
     self.showYAxis = YES;
@@ -91,7 +66,6 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     self.labelTextColor = [UIColor grayColor];
     self.labelFont = [UIFont systemFontOfSize:11.0f];
     self.yLabelCount = 4;
-    
     
     // Section lines
     self.sectionLinesColor = [UIColor lightGrayColor];
@@ -125,8 +99,8 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     [SPChartUtil layersCleanupWithCollection:_chartPointArray];
     
     // Recalculate some data
-    self.canvasWidth = self.frame.size.width - _chartMargin.left - _chartMargin.right;
-    self.canvasHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom;
+    self.canvasWidth = self.frame.size.width - self.chartMargin.left - self.chartMargin.right;
+    self.canvasHeight = self.frame.size.height - self.chartMargin.top - self.chartMargin.bottom;
     BOOL isChartEmpty = [self isEmpty] && self.emptyChartText != nil;
     
     // Add axis and labels
@@ -180,12 +154,12 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     
     const CGFloat gap = 10.0f;
     
-    CGFloat labelWidth = self.frame.size.width - _chartMargin.left - _chartMargin.right - 2*gap;
-    CGFloat labelHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom - 2*gap;
+    CGFloat labelWidth = self.frame.size.width - self.chartMargin.left - self.chartMargin.right - 2*gap;
+    CGFloat labelHeight = self.frame.size.height - self.chartMargin.top - self.chartMargin.bottom - 2*gap;
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
-                                                                _chartMargin.left + gap, // left
-                                                                _chartMargin.top + gap, // top
+                                                                self.chartMargin.left + gap, // left
+                                                                self.chartMargin.top + gap, // top
                                                                 labelWidth, // width
                                                                 labelHeight // height
                                                                 )];
@@ -468,7 +442,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     UIBezierPath * progressline = [UIBezierPath bezierPath];
     
     [progressline moveToPoint:CGPointMake(self.chartMargin.left, self.frame.size.height - self.chartMargin.bottom)];
-    [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMargin.right, self.frame.size.height - self.chartMargin.bottom)];
+    [progressline addLineToPoint:CGPointMake(self.frame.size.width - self.chartMargin.right, self.frame.size.height - self.chartMargin.bottom)];
     
     [progressline setLineWidth:1.0];
     [progressline setLineCapStyle:kCGLineCapSquare];
@@ -601,20 +575,6 @@ const CGFloat spLineChartYLabelMargin = 8.0;
                 return;
             }
         }
-    }
-}
-
-#pragma mark -
-#pragma mark Resize detection
-
-- (void)setBounds:(CGRect)newBounds
-{
-    BOOL isResize = !CGSizeEqualToSize(newBounds.size, self.bounds.size);
-    
-    [super setBounds:newBounds];
-    
-    if (isResize) {
-        [self drawChart];
     }
 }
 

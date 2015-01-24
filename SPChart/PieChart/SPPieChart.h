@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 Alessandro Calzavara. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "SPChartDelegate.h"
+#import "SPChartView.h"
 
 
 /**
@@ -22,15 +21,8 @@
  
  ## Empty chart
  If the chart is empty, `emptyChartText` will be display in the middle of it.
- 
- 
  */
-@interface SPPieChart : UIView
-
-/**
- Call this method to start drawing the chart, with the animation.
- */
-- (void)drawChart;
+@interface SPPieChart : SPChartView
 
 /**
  Contains all the `SPPieChartData` objects used for drawing the chart.
@@ -38,18 +30,8 @@
 @property (nonatomic, strong) NSArray * datas;
 
 
+
 /// @name Customization
-
-/*
- When YES, the drawing of the chart will be animated. When NO, no animation will occure.
- Default YES
- */
-@property (assign, nonatomic) BOOL animate;
-
-/**
- Duration of the drawing animation. Default value is 1.0 second
- */
-@property (nonatomic, assign) NSTimeInterval drawingDuration;
 
 /**
  Minimum empty space between the pie and the edges of the view.
@@ -104,25 +86,6 @@
 @property (nonatomic, assign) BOOL randomInitialAngle;
 
 
-/// @name Empty chart
-
-/**
- Returns YES if the sum of all the items are zero.
- */
-- (BOOL)isEmpty;
-
-/**
- When the chart has no data to display (when `drawChart`) is invoked, it will display this message (if not nil) in the center of the chart.
- Default is `nil`.
- */
-@property (nonatomic, copy) NSString * emptyChartText;
-
-/*
- emptyLabelFont will apply on the label that display `emptyChartText` message.
- Default nil, means the same as `descriptionTextFont`
- */
-@property (nonatomic, strong) UIFont * emptyLabelFont;
-
 
 /// @name Highlighting a piece of the pie
 
@@ -135,12 +98,5 @@
  Reset the highlighted state of the chart. No piece will be highlighted.
  */
 - (void)resetHightlightedItem;
-
-
-
-
-/// @name Delegate
-
-@property (nonatomic, weak) id<SPChartDelegate> delegate;
 
 @end

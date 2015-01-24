@@ -6,23 +6,15 @@
 //  Copyright (c) 2014 Alessandro Calzavara. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "SPChartView.h"
 #import "SPChartCommon.h"
-#import "SPChartDelegate.h"
 #import "SPBar.h"
 
 
 /**
  `SPBarChart` is a bar chart (don't you say?).
- 
- 
  */
-@interface SPBarChart : UIView
-
-/**
- Call this method to start drawing the chart, with the animation.
- */
-- (void)drawChart;
+@interface SPBarChart : SPChartView
 
 /**
  Contains all the `SPBarChartData` objects used for drawing the chart.
@@ -40,17 +32,6 @@
 /// @name Customize
 
 /*
- When YES, the drawing of the chart will be animated. When NO, no animation will occure.
- Default YES
- */
-@property (assign, nonatomic) BOOL animate;
-
-/**
- Duration of the drawing animation. Default value is 1.0 second
- */
-@property (nonatomic, assign) NSTimeInterval drawingDuration;
-
-/*
  yLabelFormatter will format labels text on the Y axis
  */
 @property (nonatomic, copy) SPChartLabelFormatter yLabelFormatter;
@@ -60,16 +41,13 @@
  */
 @property (nonatomic, copy) SPChartLabelFormatter barValueFormatter;
 
-/**
- Margin between the canvas area and the full view.
- Axis are fitted inside left and bottom `chartMargin`.
- */
-@property (nonatomic, assign) UIEdgeInsets chartMargin;
 
 /**
  If YES, chart will be draw upside down.
  */
 @property (assign, nonatomic) BOOL upsideDown;
+
+
 
 /// @name Customize bars
 
@@ -152,33 +130,5 @@
  Color of the dotted lines in the background of the chart
  */
 @property (nonatomic, copy) UIColor * sectionLinesColor;
-
-
-
-
-/// @name Empty chart
-
-/**
- Returns YES if the sum of all the items are zero.
- */
-- (BOOL)isEmpty;
-
-/**
- When the chart has no data to display (when `drawChart`) is invoked, it will display this message (if not nil) in the center of the chart.
- Default is `nil`.
- */
-@property (nonatomic, copy) NSString * emptyChartText;
-
-/*
- emptyLabelFont will apply on the label that display `emptyChartText` message.
- Default nil, means the same as `labelFont`
- */
-@property (nonatomic, strong) UIFont * emptyLabelFont;
-
-
-/// @name Delegate
-
-@property (nonatomic, weak) id<SPChartDelegate> delegate;
-
 
 @end

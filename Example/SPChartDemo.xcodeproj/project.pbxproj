@@ -16,6 +16,7 @@
 		FA0F2C4E194DD598006E8BB2 /* SPPieChartData.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0F2C3E194DD598006E8BB2 /* SPPieChartData.m */; };
 		FA0F2C4F194DD598006E8BB2 /* SPChartPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0F2C41194DD598006E8BB2 /* SPChartPopup.m */; };
 		FA0F2C50194DD598006E8BB2 /* SPChartUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = FA0F2C47194DD598006E8BB2 /* SPChartUtil.m */; };
+		FA55C7711A73E91F005CBA84 /* SPChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = FA55C7701A73E91F005CBA84 /* SPChartView.m */; };
 		FAD9A638194B873B00E17D60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A637194B873B00E17D60 /* Foundation.framework */; };
 		FAD9A63A194B873B00E17D60 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A639194B873B00E17D60 /* CoreGraphics.framework */; };
 		FAD9A63C194B873B00E17D60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A63B194B873B00E17D60 /* UIKit.framework */; };
@@ -66,6 +67,8 @@
 		FA0F2C44194DD598006E8BB2 /* SPChartDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChartDelegate.h; sourceTree = "<group>"; };
 		FA0F2C46194DD598006E8BB2 /* SPChartUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChartUtil.h; sourceTree = "<group>"; };
 		FA0F2C47194DD598006E8BB2 /* SPChartUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChartUtil.m; sourceTree = "<group>"; };
+		FA55C76F1A73E91F005CBA84 /* SPChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPChartView.h; sourceTree = "<group>"; };
+		FA55C7701A73E91F005CBA84 /* SPChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPChartView.m; sourceTree = "<group>"; };
 		FAD9A634194B873B00E17D60 /* SPChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD9A637194B873B00E17D60 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FAD9A639194B873B00E17D60 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -123,6 +126,8 @@
 				FA0F2C42194DD598006E8BB2 /* SPChart.h */,
 				FA0F2C43194DD598006E8BB2 /* SPChartCommon.h */,
 				FA0F2C44194DD598006E8BB2 /* SPChartDelegate.h */,
+				FA55C76F1A73E91F005CBA84 /* SPChartView.h */,
+				FA55C7701A73E91F005CBA84 /* SPChartView.m */,
 				FA0F2C45194DD598006E8BB2 /* Util */,
 			);
 			name = SPChart;
@@ -365,6 +370,7 @@
 				FAD9A64E194B873B00E17D60 /* SPMasterViewController.m in Sources */,
 				FA0F2C4B194DD598006E8BB2 /* SPLineChart.m in Sources */,
 				FA0F2C4F194DD598006E8BB2 /* SPChartPopup.m in Sources */,
+				FA55C7711A73E91F005CBA84 /* SPChartView.m in Sources */,
 				FA0F2C48194DD598006E8BB2 /* SPBar.m in Sources */,
 				FA0F2C49194DD598006E8BB2 /* SPBarChart.m in Sources */,
 				FA0F2C4D194DD598006E8BB2 /* SPPieChart.m in Sources */,

@@ -24,30 +24,9 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     CGFloat _barXSpace;
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self _setup];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)coder
-{
-    self = [super initWithCoder:coder];
-    if (self) {
-        [self _setup];
-    }
-    return self;
-}
-
 - (void)_setup
 {
-    self.backgroundColor = [UIColor clearColor];
-    self.clipsToBounds = YES;
-    
-    self.chartMargin = UIEdgeInsetsMake(40, 40, 40, 40);
+    [super _setup];
     
     self.yLabelFormatter = ^NSString *(NSInteger dataValue) {
         return [NSString stringWithFormat:@"%ld", (long)dataValue];
@@ -58,9 +37,6 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     _datas = [NSArray new];
     _maxDataValue = 10;
-    
-    _drawingDuration = 1.0;
-    _animate = YES;
     
     // Labels
     _labels = [NSMutableArray new];
@@ -122,7 +98,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     [SPChartUtil layersCleanupWithCollection:_lines];
     
     // Recalculate some data
-    _barXSpace = (self.frame.size.width - _chartMargin.left - _chartMargin.right) / [self.datas count];
+    _barXSpace = (self.frame.size.width - self.chartMargin.left - self.chartMargin.right) / [self.datas count];
     
     // Add Labels
     if (self.showXLabels) {
@@ -154,7 +130,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 
 - (void)_strokeXLabels
 {
-    CGFloat yCenter = (!self.upsideDown) ? CGRectGetHeight(self.frame) - _chartMargin.bottom/2.0 : _chartMargin.top/2.0;
+    CGFloat yCenter = (!self.upsideDown) ? CGRectGetHeight(self.frame) - self.chartMargin.bottom/2.0 : self.chartMargin.top/2.0;
     
     int labelAddCount = 0;
     for (int index = 0; index < self.datas.count; index++) {
@@ -171,7 +147,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
             [label setText:labelText];
             [label sizeToFit];
             
-            CGFloat labelXPosition  = (index *  _barXSpace + _chartMargin.left + _barXSpace /2.0 );
+            CGFloat labelXPosition  = (index *  _barXSpace + self.chartMargin.left + _barXSpace /2.0 );
             
             label.center = CGPointMake(
                                        labelXPosition,
@@ -194,13 +170,13 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         
         NSInteger labelIndex = (!self.upsideDown) ? (self.yLabelCount - index) : index + 1;
         NSString * labelText = _yLabelFormatter((float)self.maxDataValue * ( labelIndex / (float)self.yLabelCount ));
-        CGFloat y = (!self.upsideDown) ? yLabelSectionHeight * index + _chartMargin.top - yLabelHeight/2.0 :
-                                         yLabelSectionHeight * (index + 1) + _chartMargin.top - yLabelHeight/2.0;
+        CGFloat y = (!self.upsideDown) ? yLabelSectionHeight * index + self.chartMargin.top - yLabelHeight/2.0 :
+                                         yLabelSectionHeight * (index + 1) + self.chartMargin.top - yLabelHeight/2.0;
         
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                     spBarChartYLabelMargin,
                                                                     y,
-                                                                    _chartMargin.left - spBarChartYLabelMargin*2,
+                                                                    self.chartMargin.left - spBarChartYLabelMargin*2,
                                                                     yLabelHeight
                                                                     )];
         [label setFont:self.labelFont];
@@ -219,7 +195,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 {
     // Horizontal lines, aligned with Y labels
     
-    float yLabelSectionHeight = (self.frame.size.height - _chartMargin.top - _chartMargin.bottom) / self.yLabelCount;
+    float yLabelSectionHeight = (self.frame.size.height - self.chartMargin.top - self.chartMargin.bottom) / self.yLabelCount;
     
     for (int index = 0; index < self.yLabelCount; index++) {
         
@@ -228,9 +204,9 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         
         UIBezierPath * linePath = [UIBezierPath bezierPath];
         
-        CGFloat y = (!self.upsideDown) ? yLabelSectionHeight * index + _chartMargin.top : yLabelSectionHeight * (index + 1) + _chartMargin.bottom;
-        [linePath moveToPoint:CGPointMake(_chartMargin.left, y)];
-        [linePath addLineToPoint:CGPointMake(self.frame.size.width - _chartMargin.right, y)];
+        CGFloat y = (!self.upsideDown) ? yLabelSectionHeight * index + self.chartMargin.top : yLabelSectionHeight * (index + 1) + self.chartMargin.bottom;
+        [linePath moveToPoint:CGPointMake(self.chartMargin.left, y)];
+        [linePath addLineToPoint:CGPointMake(self.frame.size.width - self.chartMargin.right, y)];
         
         [linePath setLineWidth:1.0];
         [linePath setLineCapStyle:kCGLineCapSquare];
@@ -260,7 +236,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
 
 - (void)_strokeBars
 {
-    CGFloat chartCavanHeight = self.frame.size.height - _chartMargin.top - _chartMargin.bottom;
+    CGFloat chartCavanHeight = self.frame.size.height - self.chartMargin.top - self.chartMargin.bottom;
     
     [self.datas enumerateObjectsUsingBlock:^(SPBarChartData * data, NSUInteger index, BOOL *stop) {
         
@@ -269,8 +245,8 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         CGFloat barWidth = (self.barWidth > 0) ? self.barWidth : _barXSpace * 0.75; // fixed width : dynamic width
         CGFloat barHeight = chartCavanHeight * barHeightScale;
         
-        CGFloat barXPosition = barXPosition = _chartMargin.left + index * _barXSpace + (_barXSpace - barWidth)/2.0;
-        CGFloat barYPosition = _chartMargin.top + (!self.upsideDown ? chartCavanHeight * (1.0f - barHeightScale) : 0.0);
+        CGFloat barXPosition = barXPosition = self.chartMargin.left + index * _barXSpace + (_barXSpace - barWidth)/2.0;
+        CGFloat barYPosition = self.chartMargin.top + (!self.upsideDown ? chartCavanHeight * (1.0f - barHeightScale) : 0.0);
         
         
         SPBar * bar = [[SPBar alloc] initWithFrame:CGRectMake(barXPosition, barYPosition, barWidth, barHeight)];
@@ -325,10 +301,10 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     UIBezierPath * progressline = [UIBezierPath bezierPath];
     
-    CGFloat bottomY = (!self.upsideDown) ? self.frame.size.height - _chartMargin.bottom : _chartMargin.top;
+    CGFloat bottomY = (!self.upsideDown) ? self.frame.size.height - self.chartMargin.bottom : self.chartMargin.top;
     
-    [progressline moveToPoint:CGPointMake(_chartMargin.left, bottomY)];
-    [progressline addLineToPoint:CGPointMake(self.frame.size.width - _chartMargin.right, bottomY)];
+    [progressline moveToPoint:CGPointMake(self.chartMargin.left, bottomY)];
+    [progressline addLineToPoint:CGPointMake(self.frame.size.width - self.chartMargin.right, bottomY)];
     
     [progressline setLineWidth:1.0];
     [progressline setLineCapStyle:kCGLineCapSquare];
@@ -357,11 +333,11 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     UIBezierPath * progressLeftline = [UIBezierPath bezierPath];
     
-    CGFloat leftStartY = (!self.upsideDown) ? self.frame.size.height - _chartMargin.bottom : _chartMargin.top;
-    CGFloat leftEndY = (!self.upsideDown) ? _chartMargin.top/2 : self.frame.size.height - _chartMargin.bottom/2.0;
+    CGFloat leftStartY = (!self.upsideDown) ? self.frame.size.height - self.chartMargin.bottom : self.chartMargin.top;
+    CGFloat leftEndY = (!self.upsideDown) ? self.chartMargin.top/2 : self.frame.size.height - self.chartMargin.bottom/2.0;
     
-    [progressLeftline moveToPoint:CGPointMake(_chartMargin.left, leftStartY)];
-    [progressLeftline addLineToPoint:CGPointMake(_chartMargin.left, leftEndY)];
+    [progressLeftline moveToPoint:CGPointMake(self.chartMargin.left, leftStartY)];
+    [progressLeftline addLineToPoint:CGPointMake(self.chartMargin.left, leftEndY)];
     
     [progressLeftline setLineWidth:1.0];
     [progressLeftline setLineCapStyle:kCGLineCapSquare];
@@ -428,12 +404,12 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     
     const CGFloat gap = 10.0f;
     
-    CGFloat labelWidth = CGRectGetWidth(self.frame) - _chartMargin.left - _chartMargin.right - 2*gap;
-    CGFloat labelHeight = CGRectGetHeight(self.frame) - _chartMargin.top - _chartMargin.bottom - 2*gap;
+    CGFloat labelWidth = CGRectGetWidth(self.frame) - self.chartMargin.left - self.chartMargin.right - 2*gap;
+    CGFloat labelHeight = CGRectGetHeight(self.frame) - self.chartMargin.top - self.chartMargin.bottom - 2*gap;
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
-                                                                _chartMargin.left + gap,
-                                                                _chartMargin.top + gap,
+                                                                self.chartMargin.left + gap,
+                                                                self.chartMargin.top + gap,
                                                                 labelWidth,
                                                                 labelHeight
                                                                 )];
@@ -473,20 +449,6 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         if ([self.delegate respondsToSelector:@selector(SPChartEmptySelection:)]) {
             [self.delegate SPChartEmptySelection:self];
         }
-    }
-}
-
-#pragma mark -
-#pragma mark Resize detection
-
-- (void)setBounds:(CGRect)newBounds
-{
-    BOOL isResize = !CGSizeEqualToSize(newBounds.size, self.bounds.size);
-    
-    [super setBounds:newBounds];
-    
-    if (isResize) {
-        [self drawChart];
     }
 }
 
