@@ -1,3 +1,7 @@
+2015-01-28 upcoming version
+
+  * Added label rotation angle property for label on X axis (Thanks to [ecaste](https://github.com/ecaste))
+  
 2015-01-24 version 0.2.0
 
   * Added option to flip upside down bar chart
