@@ -14,7 +14,7 @@ If you **want to contribute**, submit a pull request.
 
 
 
-## Features
+## Main Features
 
 * Every chart will draw itself with a nice **animation**.
 

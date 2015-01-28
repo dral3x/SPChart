@@ -1,6 +1,6 @@
-2015-01-28 upcoming version
+2015-01-28 version 0.2.1
 
-  * Added label rotation angle property for label on X axis (Thanks to [ecaste](https://github.com/ecaste))
+  * Added label rotation angle property for label on X axis of line chart (Thanks to [ecaste](https://github.com/dral3x/SPChart/pull/4))
   
 2015-01-24 version 0.2.0
 
