@@ -55,6 +55,11 @@
 @property (nonatomic, assign) BOOL showXLabels;
 
 /*
+ change the orientation of labels on X axis
+ */
+@property (nonatomic, assign) CGFloat xLabelsOrientationAngle;
+
+/*
  yLabelCount defines how many labels to display on the left (y axis)
  */
 @property (nonatomic, assign) NSInteger yLabelCount;

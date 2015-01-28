@@ -358,6 +358,8 @@ const CGFloat spLineChartYLabelMargin = 8.0;
         
         label.center = CGPointMake(centerX, centerY);
         
+        [label setTransform:CGAffineTransformMakeRotation(self.xLabelsOrientationAngle)];
+        
         [self.labels addObject:label];
         [self addSubview:label];
         
