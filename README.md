@@ -85,7 +85,7 @@ Each chart has a well documented header file. Please refer to them to understand
 
 SPChart is a fork of [PNChart](https://github.com/kevinzhow/PNChart) library, created by [kevinzhow](https://github.com/kevinzhow). Kudos to you, Kevin!
 
-
+Also, a big thanks goes to all SPChart's [contributors](https://github.com/dral3x/SPChart/graphs/contributors).
 
 ## License
 
