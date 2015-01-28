@@ -51,6 +51,9 @@
     // Show empty message, if the chart is empty
     chart.emptyChartText = @"The chart is empty.";
     
+    //change xLabels orientation
+    chart.xLabelsOrientationAngle = -M_PI / 2;
+    
     [self.view addSubview:chart];
     
     [chart drawChart];
