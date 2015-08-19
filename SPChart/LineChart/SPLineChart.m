@@ -528,7 +528,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
             CGPoint p2 = [linePointsArray[i + 1] CGPointValue];
             
             // Closest distance from point to line
-            float distance = fabsf(((p2.x - p1.x) * (touchPoint.y - p1.y)) - ((p1.x - touchPoint.x) * (p1.y - p2.y)));
+            float distance = fabs(((p2.x - p1.x) * (touchPoint.y - p1.y)) - ((p1.x - touchPoint.x) * (p1.y - p2.y)));
             distance /= hypot(p2.x - p1.x, p1.y - p2.y);
             
             if (distance <= 5.0) {
@@ -561,7 +561,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
             CGPoint p1 = [linePointsArray[i] CGPointValue];
             CGPoint p2 = [linePointsArray[i + 1] CGPointValue];
             
-            float distanceToP1 = fabsf(hypot(touchPoint.x - p1.x, touchPoint.y - p1.y));
+            float distanceToP1 = fabs(hypot(touchPoint.x - p1.x, touchPoint.y - p1.y));
             float distanceToP2 = hypot(touchPoint.x - p2.x, touchPoint.y - p2.y);
             
             float distance = MIN(distanceToP1, distanceToP2);

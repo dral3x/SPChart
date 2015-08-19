@@ -1,3 +1,7 @@
+2015-08-19 version 0.2.2
+
+  * Fixed some warning while building with iOS 8.4
+
 2015-01-28 version 0.2.1
 
   * Added label rotation angle property for label on X axis of line chart (Thanks to [ecaste](https://github.com/dral3x/SPChart/pull/4))
