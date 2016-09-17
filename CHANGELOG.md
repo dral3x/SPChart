@@ -1,7 +1,8 @@
-2016-09-17 version 0.2.3
+2016-09-17 version 0.3.0
 
   * Fixed warning on `CAAnimationDelegate` with iOS10
   * Updated demo files for Xcode 8
+  * Dropped support for iOS less then 8
   
 2015-08-19 version 0.2.2
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SPChart"
-  s.version      = "0.2.2"
+  s.version      = "0.3.0"
 
   s.summary      = "A simple, animated and beatiful chart library used in Spreaker for iPhone app."
 
@@ -9,8 +9,8 @@ Pod::Spec.new do |s|
 
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
-  s.platform     = :ios, '6.0'
-  s.source       = { :git => "https://github.com/dral3x/SPChart.git", :tag => "0.2.2" }
+  s.platform     = :ios, '8.0'
+  s.source       = { :git => "https://github.com/dral3x/SPChart.git", :tag => "0.3.0" }
 
   s.source_files = 'SPChart/**/*.{h,m}'
   s.public_header_files = 'SPChart/**/*.h'
