@@ -27,25 +27,9 @@
 		FAD9A64E194B873B00E17D60 /* SPMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A64D194B873B00E17D60 /* SPMasterViewController.m */; };
 		FAD9A651194B873C00E17D60 /* SPDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A650194B873C00E17D60 /* SPDetailViewController.m */; };
 		FAD9A653194B873C00E17D60 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD9A652194B873C00E17D60 /* Images.xcassets */; };
-		FAD9A65A194B873C00E17D60 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A659194B873C00E17D60 /* XCTest.framework */; };
-		FAD9A65B194B873C00E17D60 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A637194B873B00E17D60 /* Foundation.framework */; };
-		FAD9A65C194B873C00E17D60 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD9A63B194B873B00E17D60 /* UIKit.framework */; };
-		FAD9A664194B873C00E17D60 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FAD9A662194B873C00E17D60 /* InfoPlist.strings */; };
-		FAD9A666194B873C00E17D60 /* SPChartDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FAD9A665194B873C00E17D60 /* SPChartDemoTests.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		FAD9A65D194B873C00E17D60 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FAD9A62C194B873B00E17D60 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FAD9A633194B873B00E17D60;
-			remoteInfo = SPChartDemo;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		D1CDA13C3EBB49648467EA69 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA0F2C2E194DD598006E8BB2 /* SPBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBar.h; sourceTree = "<group>"; };
 		FA0F2C2F194DD598006E8BB2 /* SPBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPBar.m; sourceTree = "<group>"; };
 		FA0F2C30194DD598006E8BB2 /* SPBarChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPBarChart.h; sourceTree = "<group>"; };
@@ -85,11 +69,7 @@
 		FAD9A64F194B873B00E17D60 /* SPDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPDetailViewController.h; sourceTree = "<group>"; };
 		FAD9A650194B873C00E17D60 /* SPDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPDetailViewController.m; sourceTree = "<group>"; };
 		FAD9A652194B873C00E17D60 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		FAD9A658194B873C00E17D60 /* SPChartDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SPChartDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD9A659194B873C00E17D60 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		FAD9A661194B873C00E17D60 /* SPChartDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SPChartDemoTests-Info.plist"; sourceTree = "<group>"; };
-		FAD9A663194B873C00E17D60 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FAD9A665194B873C00E17D60 /* SPChartDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPChartDemoTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,16 +80,6 @@
 				FAD9A63A194B873B00E17D60 /* CoreGraphics.framework in Frameworks */,
 				FAD9A63C194B873B00E17D60 /* UIKit.framework in Frameworks */,
 				FAD9A638194B873B00E17D60 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FAD9A655194B873C00E17D60 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FAD9A65A194B873C00E17D60 /* XCTest.framework in Frameworks */,
-				FAD9A65C194B873C00E17D60 /* UIKit.framework in Frameworks */,
-				FAD9A65B194B873C00E17D60 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,7 +162,6 @@
 			children = (
 				FA0F2C2C194DD598006E8BB2 /* SPChart */,
 				FAD9A63D194B873B00E17D60 /* SPChartDemo */,
-				FAD9A65F194B873C00E17D60 /* SPChartDemoTests */,
 				FAD9A636194B873B00E17D60 /* Frameworks */,
 				FAD9A635194B873B00E17D60 /* Products */,
 			);
@@ -202,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				FAD9A634194B873B00E17D60 /* SPChartDemo.app */,
-				FAD9A658194B873C00E17D60 /* SPChartDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,7 +182,6 @@
 				FAD9A639194B873B00E17D60 /* CoreGraphics.framework */,
 				FAD9A63B194B873B00E17D60 /* UIKit.framework */,
 				FAD9A659194B873C00E17D60 /* XCTest.framework */,
-				D1CDA13C3EBB49648467EA69 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -246,24 +213,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FAD9A65F194B873C00E17D60 /* SPChartDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				FAD9A665194B873C00E17D60 /* SPChartDemoTests.m */,
-				FAD9A660194B873C00E17D60 /* Supporting Files */,
-			);
-			path = SPChartDemoTests;
-			sourceTree = "<group>";
-		};
-		FAD9A660194B873C00E17D60 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				FAD9A661194B873C00E17D60 /* SPChartDemoTests-Info.plist */,
-				FAD9A662194B873C00E17D60 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -284,24 +233,6 @@
 			productReference = FAD9A634194B873B00E17D60 /* SPChartDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FAD9A657194B873C00E17D60 /* SPChartDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FAD9A66C194B873C00E17D60 /* Build configuration list for PBXNativeTarget "SPChartDemoTests" */;
-			buildPhases = (
-				FAD9A654194B873C00E17D60 /* Sources */,
-				FAD9A655194B873C00E17D60 /* Frameworks */,
-				FAD9A656194B873C00E17D60 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FAD9A65E194B873C00E17D60 /* PBXTargetDependency */,
-			);
-			name = SPChartDemoTests;
-			productName = SPChartDemoTests;
-			productReference = FAD9A658194B873C00E17D60 /* SPChartDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -309,13 +240,8 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = SP;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Alessandro Calzavara";
-				TargetAttributes = {
-					FAD9A657194B873C00E17D60 = {
-						TestTargetID = FAD9A633194B873B00E17D60;
-					};
-				};
 			};
 			buildConfigurationList = FAD9A62F194B873B00E17D60 /* Build configuration list for PBXProject "SPChartDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -331,7 +257,6 @@
 			projectRoot = "";
 			targets = (
 				FAD9A633194B873B00E17D60 /* SPChartDemo */,
-				FAD9A657194B873C00E17D60 /* SPChartDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -344,14 +269,6 @@
 				FAD9A653194B873C00E17D60 /* Images.xcassets in Resources */,
 				FAD9A642194B873B00E17D60 /* InfoPlist.strings in Resources */,
 				FAD9A64B194B873B00E17D60 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FAD9A656194B873C00E17D60 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FAD9A664194B873C00E17D60 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,23 +296,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FAD9A654194B873C00E17D60 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FAD9A666194B873C00E17D60 /* SPChartDemoTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		FAD9A65E194B873C00E17D60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FAD9A633194B873B00E17D60 /* SPChartDemo */;
-			targetProxy = FAD9A65D194B873C00E17D60 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		FAD9A640194B873B00E17D60 /* InfoPlist.strings */ = {
@@ -414,14 +315,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		FAD9A662194B873C00E17D60 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FAD9A663194B873C00E17D60 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -438,13 +331,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -457,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -476,20 +375,25 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -503,6 +407,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SPChartDemo/SPChartDemo-Prefix.pch";
 				INFOPLIST_FILE = "SPChartDemo/SPChartDemo-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spreaker.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -516,48 +421,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SPChartDemo/SPChartDemo-Prefix.pch";
 				INFOPLIST_FILE = "SPChartDemo/SPChartDemo-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.spreaker.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		FAD9A66D194B873C00E17D60 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SPChartDemo.app/SPChartDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SPChartDemo/SPChartDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "SPChartDemoTests/SPChartDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		FAD9A66E194B873C00E17D60 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SPChartDemo.app/SPChartDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SPChartDemo/SPChartDemo-Prefix.pch";
-				INFOPLIST_FILE = "SPChartDemoTests/SPChartDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -578,15 +444,6 @@
 			buildConfigurations = (
 				FAD9A66A194B873C00E17D60 /* Debug */,
 				FAD9A66B194B873C00E17D60 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FAD9A66C194B873C00E17D60 /* Build configuration list for PBXNativeTarget "SPChartDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FAD9A66D194B873C00E17D60 /* Debug */,
-				FAD9A66E194B873C00E17D60 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
