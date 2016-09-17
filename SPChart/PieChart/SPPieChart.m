@@ -9,7 +9,7 @@
 #import "SPPieChart.h"
 #import "SPPieChartData.h"
 
-@interface SPPieChart ()
+@interface SPPieChart () <CAAnimationDelegate>
 
 @property (nonatomic) CGFloat total;
 @property (nonatomic) CGFloat currentTotal;
