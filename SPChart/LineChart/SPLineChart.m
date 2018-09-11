@@ -86,6 +86,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     self.yMinValue = 0;
     [datas enumerateObjectsUsingBlock:^(SPLineChartData * data, NSUInteger idx, BOOL *stop) {
         self.yMaxValue = MAX(self.yMaxValue, data.maxValue);
+        self.yMinValue = MIN(self.yMinValue, data.minValue);
     }];
     
     _xLabelWidth = floorf((CGRectGetWidth(self.frame) - self.chartMargin.left - self.chartMargin.right) / [xValues count]);
@@ -372,9 +373,8 @@ const CGFloat spLineChartYLabelMargin = 8.0;
     CGFloat yLabelHeight = ceilf([SPChartUtil heightOfLabelWithFont:self.labelFont]);
     
     for (int index = 0; index < self.yLabelCount; index++) {
-        
-        NSString * labelText = self.yLabelFormatter(ceilf((float)self.yMaxValue * (float)((self.yLabelCount - index) / (float)self.yLabelCount )));
-        
+        float range = self.yMaxValue - self.yMinValue;
+        NSString * labelText = self.yLabelFormatter(ceilf((float)self.yMinValue + ceilf((float)range * (float)((self.yLabelCount - index) / (float)self.yLabelCount ))));
         
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(
                                                                     spLineChartYLabelMargin,

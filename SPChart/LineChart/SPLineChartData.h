@@ -35,5 +35,6 @@ typedef NS_ENUM(NSInteger, SPLineChartPointStyle)
 - (BOOL)isEmpty;
 
 - (NSInteger)maxValue;
+- (NSInteger)minValue;
 
 @end

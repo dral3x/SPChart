@@ -101,6 +101,12 @@
  */
 @property (nonatomic, assign) NSInteger xLabelSkip;
 
+/**
+ xLabelGroups define the groups of labels
+ 1 means show all labels; 2 show between 2 bars, 3 between 3 bars, etc
+ */
+@property (nonatomic, assign) NSInteger xLabelGroups;
+
 /*
  labelTextColor changes the bar label text color
  */
