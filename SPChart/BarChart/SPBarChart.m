@@ -243,10 +243,10 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         
         CGFloat barHeightScale = [self _scaleFactorOfBarWithData:data maxValue:self.maxDataValue]; // 0 .. 1
         
-        CGFloat barWidth = (self.barWidth > 0) ? self.barWidth : _barXSpace * 0.75; // fixed width : dynamic width
+        CGFloat barWidth = (self.barWidth > 0) ? self.barWidth : self->_barXSpace * 0.75; // fixed width : dynamic width
         CGFloat barHeight = chartCavanHeight * barHeightScale;
         
-        CGFloat barXPosition = barXPosition = self.chartMargin.left + index * _barXSpace + (_barXSpace - barWidth)/2.0;
+        CGFloat barXPosition = barXPosition = self.chartMargin.left + index * self->_barXSpace + (self->_barXSpace - barWidth)/2.0;
         CGFloat barYPosition = self.chartMargin.top + (!self.upsideDown ? chartCavanHeight * (1.0f - barHeightScale) : 0.0);
         
         
@@ -268,7 +268,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
         // For click index, set the tag id
         bar.tag = index;
         
-        [_bars addObject:bar];
+        [self->_bars addObject:bar];
         [self addSubview:bar];
         
         // Bar labels
@@ -289,7 +289,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
             [label setBackgroundColor:[UIColor clearColor]];
             [label setText:labelText];
             
-            [_labels addObject:label];
+            [self->_labels addObject:label];
             [self addSubview:label];
         }
         

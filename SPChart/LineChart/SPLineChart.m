@@ -347,7 +347,7 @@ const CGFloat spLineChartYLabelMargin = 8.0;
 {
     [self.xValues enumerateObjectsUsingBlock:^(NSString * xValue, NSUInteger i, BOOL *stop) {
         
-        CGFloat centerX = self.chartMargin.left + (i * _xLabelWidth) + _xLabelWidth/2;
+        CGFloat centerX = self.chartMargin.left + (i * self->_xLabelWidth) + self->_xLabelWidth/2;
         CGFloat centerY = self.frame.size.height - self.chartMargin.bottom/2;
         
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectZero];

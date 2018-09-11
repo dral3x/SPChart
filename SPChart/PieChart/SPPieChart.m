@@ -192,7 +192,7 @@
     [self _loadDefault];
     
     [self.datas enumerateObjectsUsingBlock:^(SPPieChartData * data, NSUInteger idx, BOOL *stop) {
-        _total += data.value;
+        self->_total += data.value;
     }];
 }
 
