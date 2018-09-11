@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
 
   s.platform     = :ios, '8.0'
-  s.source       = { :git => "https://github.com/thom-ek/SPChart.git", :tag => "0.3.1" }
+  s.source       = { :git => "https://github.com/dral3x/SPChart.git", :tag => s.version }
 
   s.source_files = 'SPChart/**/*.{h,m}'
   s.public_header_files = 'SPChart/**/*.h'

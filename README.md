@@ -4,12 +4,12 @@
 [![License](https://img.shields.io/cocoapods/l/SPChart.svg?style=flat)](http://cocoadocs.org/docsets/SPChart)
 [![Platform](https://img.shields.io/cocoapods/p/SPChart.svg?style=flat)](http://cocoadocs.org/docsets/SPChart)
 
-A simple yet beautifully animated chart library, used in [Spreaker](http://itunes.apple.com/app/id388449677) for iPhone app. 
+A simple yet beautifully animated chart library, used in [Spreaker](http://itunes.apple.com/app/id388449677) for iPhone app.
 It is a fork of [PNChart](https://github.com/kevinzhow/PNChart) with a much cleaner and uniform code and more nice features built-in.
 
 In the repository, there is a demo app you can use to see and test specific customizations you would like you have. Have fun with it!
 
-If you **found a bug** or **have a feature request**, please open an issue. 
+If you **found a bug** or **have a feature request**, please open an issue.
 If you **want to contribute**, submit a pull request.
 
 
