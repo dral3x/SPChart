@@ -47,6 +47,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     self.yLabelCount = 4;
     self.showXLabels = YES;
     self.showYLabels = YES;
+    _xLabelGroups = 1;
     
     // Bars
     _bars = [NSMutableArray new];
@@ -136,7 +137,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
     for (int index = 0; index < self.datas.count; index++) {
         labelAddCount += 1;
         
-        if (labelAddCount == _xLabelSkip) {
+        if ((labelAddCount == _xLabelSkip && _xLabelGroups==1) || _xLabelGroups == 1 || !(index%_xLabelGroups)) {
             SPBarChartData * data = self.datas[index];
             NSString * labelText = data.dataDescription;
             
@@ -147,7 +148,7 @@ const CGFloat spBarChartYLabelMargin = 8.0;
             [label setText:labelText];
             [label sizeToFit];
             
-            CGFloat labelXPosition  = (index *  _barXSpace + self.chartMargin.left + _barXSpace /2.0 );
+            CGFloat labelXPosition  = (index *  _barXSpace + (_barXSpace*(_xLabelGroups-1))/2  + self.chartMargin.left + _barXSpace /2.0 );
             
             label.center = CGPointMake(
                                        labelXPosition,

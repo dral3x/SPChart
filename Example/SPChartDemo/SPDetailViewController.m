@@ -33,10 +33,11 @@
     self.navigationItem.title = @"Line Chart";
     
     SPLineChart * chart = [[SPLineChart alloc] initWithFrame:CHART_FRAME];
+    chart.yLabelCount = 7;
     
     [chart setDatas:@[
-                      [SPLineChartData dataWithValues:@[ @9, @6, @11, @14, @8, @5 ] color:Color1],
-                      [SPLineChartData dataWithValues:@[ @1, @5, @8, @12, @11, @6 ] color:Color2]
+                      [SPLineChartData dataWithValues:@[ @(0), @(-2), @1, @0, @3, @2 ] color:Color1],
+                      [SPLineChartData dataWithValues:@[ @0, @1, @3, @2, @5, @4 ] color:Color2]
                       ]
          forXValues:@[
                       @"GEN",

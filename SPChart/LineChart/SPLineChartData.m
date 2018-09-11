@@ -76,4 +76,17 @@
     return max;
 }
 
+- (NSInteger)minValue
+{
+    __block NSInteger min = 0;
+    
+    [self.values enumerateObjectsUsingBlock:^(NSNumber * value, NSUInteger idx, BOOL *stop) {
+        
+        min = MIN(min, [value integerValue]);
+        
+    }];
+    
+    return min;
+}
+
 @end
